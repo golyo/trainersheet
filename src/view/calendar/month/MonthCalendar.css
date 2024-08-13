@@ -1,0 +1,34 @@
+.month-calendar-container {
+    position: relative;
+    height: 100%;
+    padding-top: 0;
+    overflow: hidden;
+    border-left: 1px solid var(--grid-color);
+    border-bottom: 1px solid var(--grid-color);
+}
+
+.month-calendar-header {
+    background-image: linear-gradient(90deg, var(--grid-color) 0, white calc(30%), white calc(70%), var(--grid-color) calc(100%));
+    border-bottom: 1px solid var(--grid-color);
+}
+
+.month-header-event {
+    line-height: 1;
+    cursor: default;
+    color: var(--day-header-color);
+}
+
+.month-calendar-background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.month-calendar-background-item {
+    flex: 1;
+    border-top: 1px solid var(--grid-color);
+}

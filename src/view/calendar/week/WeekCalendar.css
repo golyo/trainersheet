@@ -1,0 +1,27 @@
+.week-calendar-container {
+    position: relative;
+    height: 100%;
+    padding-top: 0;
+    overflow: auto;
+    border-left: 1px solid var(--grid-color);
+    border-bottom: 1px solid var(--grid-color);
+}
+
+.week-calendar-header-container {
+    position: sticky;
+    width: 100%;
+    top: 0;
+    z-index: 4;
+}
+
+.week-header-event {
+    color: var(--day-header-color);
+    cursor: default;
+}
+
+.week-hour-event {
+    width: 35px;
+    cursor: default;
+    background-color: var(--week-hour-bg-color);
+    color: var(--week-hour-color);
+}

@@ -1,0 +1,27 @@
+.event-container {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 2;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.event-title {
+    font-size: var(--event-title-font-size);
+    font-weight: bold;
+}
+
+.event-description {
+    font-size: var(--event-description-font-size);
+}
+
+.event-badge {
+    position: absolute;
+    background-color: var(--event-badge-bg-color);
+    color: var(--event-badge-color);
+    font-size: var(--event-badge-font-size);
+    padding: 1px 3px;
+    border-radius: 50%;
+    inset: var(--event-badge-pos-top) var(--event-badge-pos-right) var(--event-badge-pos-bottom) var(--event-badge-pos-left);
+}

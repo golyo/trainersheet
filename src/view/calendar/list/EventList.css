@@ -1,0 +1,17 @@
+.event-list {
+    overflow: hidden auto;
+    height: 100%;
+    width: 100%;
+}
+
+.event-list-inner {
+    padding: 10px;
+}
+
+.event-list .event-badge {
+    right: 10px;
+}
+
+.event-container {
+    margin-bottom: 5px;
+}

@@ -1,0 +1,28 @@
+.day-list-container {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--grid-color);
+}
+
+.day-list-event-container {
+    flex-grow: 1;
+    min-height: 0;
+}
+
+.day-list-header {
+    background-image: linear-gradient(90deg, var(--grid-color) 0, white calc(30%), white calc(70%), var(--grid-color) calc(100%));
+    background-size: 100%;
+    border-bottom: 1px solid var(--grid-color);
+    color: var(--day-header-color);
+}
+
+.day-list-title {
+    font-size: var(--event-title-font-size);
+}
+
+.day-list-description {
+    font-size: var(--event-description-font-size);
+}

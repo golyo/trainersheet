@@ -1,0 +1,25 @@
+.navigation-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navigation-container .arrow-container {
+    background-color: #DDD;
+}
+
+.today-container {
+    cursor: pointer;
+    position: relative;
+    border-radius: 15px;
+    background-color: #DDD;
+    font-weight: bold;
+    color: var(--arrow-color)
+}
+
+.today-container .today-label {
+    padding: 0 5px;
+}
+
+.today-container:hover .today-label {
+    font-size: 110%;
+}

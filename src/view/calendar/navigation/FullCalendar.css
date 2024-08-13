@@ -1,0 +1,12 @@
+.full-calendar-container {
+    display: flex;
+    gap: 2px;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.calendar-mode-container {
+    flex-grow: 1;
+    min-height: 0;
+}

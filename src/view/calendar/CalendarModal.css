@@ -1,0 +1,46 @@
+.dialog-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.dialog-container {
+    position: relative;
+    z-index: 5;
+    background-color: white;
+    border: solid 1px steelblue;
+    box-shadow: 3px 3px 5px #AAA;
+    border-radius: 6px;
+}
+
+.dialog-header {
+    position: sticky;
+    z-index: 6;
+    top: 0;
+    padding: 5px 15px;
+    background-color: var(--grid-color);
+    font-size: var(--dialog-header-font-size);
+    color: white;
+}
+
+/* The Close Button */
+.dialog-close {
+    position: relative;
+    color: white;
+    float: right;
+    top: -5px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.dialog-close:hover,
+.dialog-close:focus {
+    color: darkblue;
+    text-decoration: none;
+    cursor: pointer;
+}

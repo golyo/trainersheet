@@ -1,0 +1,52 @@
+.table-arrow-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    cursor: default;
+}
+
+.arrow {
+    position: relative;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    cursor: pointer;
+}
+
+.arrow-title {
+    min-width: 5px;
+}
+
+.arrow-container {
+    position: relative;
+    display: inline-flex;
+    border-radius: 15px;
+    padding: 5px 0;
+}
+
+.arrow-rectangle {
+    position: relative;
+    display: inline-flex;
+    min-width: 30px;
+    justify-content: center;
+}
+
+.arrow-container-right:hover .arrow-rectangle {
+    animation: go-right 0.5s;
+}
+
+.arrow-container-left:hover .arrow-rectangle {
+    animation: go-left 0.5s;
+}
+
+@keyframes go-left  {
+    0%  { left: 0 }
+    50%  { left: -5px }
+    100% { left: 0 }
+}
+
+@keyframes go-right  {
+    0%  { left: 0 }
+    50%  { left: 5px }
+    100% { left: 0 }
+}
