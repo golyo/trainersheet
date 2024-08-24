@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { useCallback, useMemo, useState, MouseEvent } from 'react';
+import { useCallback, useMemo, useState, MouseEvent } from 'react'
 import {
   Link, Route, Routes,
-} from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+} from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import {
   AppBar,
   Button,
@@ -14,84 +14,84 @@ import {
   MenuItem,
   Toolbar,
   Typography,
-} from '@mui/material';
-import { Logout, ManageAccounts } from '@mui/icons-material';
-import Login from '../login/Login';
-import Verification from '../login/Verification';
-import RegistrationSuccess from '../login/RegistrationSuccess';
-import Register from '../login/Register';
-import PasswordReset from '../login/PasswordReset';
-import PasswordChange from '../login/PasswordChange';
-import { User, useUser } from '../../hooks/user';
-import UserCalendar from '../user/UserCalendar';
-import TrainingGroups from '../trainer/TrainingGroups';
-import GroupRouter from '../trainer/group/GroupRouter';
-import DisplayGroup from '../trainer/group/DisplayGroup';
-import Profile from '../login/Profile';
-import MembersList from '../trainer/members/MembersList';
-import UserMemberships from '../user/UserMemberships';
-import { useAuth } from '../../hooks/auth';
-import NextEvents from '../user/NextEvents';
-import TrainerCalendar from '../trainer/events/TrainerCalendar';
-import EventPage from '../trainer/events/EventPage';
-import TrainerEvents from '../trainer/events/TrainerEvents';
-import SearchTrainer from '../user/SearchTrainer';
-import UserAvatar from '../common/UserAvatar';
-import MonthlyMemberStat from '../trainer/stats/MonthyMemberStat';
-import StatRouter from '../trainer/stats/StatRouter';
-import Last28DaysStat from '../trainer/stats/Last28DaysStat';
-import MemberTicketStat from '../trainer/stats/MemberTicketStat';
+} from '@mui/material'
+import { Logout, ManageAccounts } from '@mui/icons-material'
+import Login from '../login/Login'
+import Verification from '../login/Verification'
+import RegistrationSuccess from '../login/RegistrationSuccess'
+import Register from '../login/Register'
+import PasswordReset from '../login/PasswordReset'
+import PasswordChange from '../login/PasswordChange'
+import { User, useUser } from '../../hooks/user'
+import UserCalendar from '../user/UserCalendar'
+import TrainingGroups from '../trainer/TrainingGroups'
+import GroupRouter from '../trainer/group/GroupRouter'
+import DisplayGroup from '../trainer/group/DisplayGroup'
+import Profile from '../login/Profile'
+import MembersList from '../trainer/members/MembersList'
+import UserMemberships from '../user/UserMemberships'
+import { useAuth } from '../../hooks/auth'
+import NextEvents from '../user/NextEvents'
+import TrainerCalendar from '../trainer/events/TrainerCalendar'
+import EventPage from '../trainer/events/EventPage'
+import TrainerEvents from '../trainer/events/TrainerEvents'
+import SearchTrainer from '../user/SearchTrainer'
+import UserAvatar from '../common/UserAvatar'
+import MonthlyMemberStat from '../trainer/stats/MonthyMemberStat'
+import StatRouter from '../trainer/stats/StatRouter'
+import Last28DaysStat from '../trainer/stats/Last28DaysStat'
+import MemberTicketStat from '../trainer/stats/MemberTicketStat'
 
-import styles from './MenuDrawer.style';
-import { useTheme } from '@emotion/react';
+import styles from './MenuDrawer.style'
+import { useTheme } from '@emotion/react'
 
 export type MenuItemType = {
-  label: string;
-  icon?: React.ReactNode;
-  isVisible: (user?: User) => boolean;
-  path: string;
-};
+  label: string
+  icon?: React.ReactNode
+  isVisible: (user?: User) => boolean
+  path: string
+}
 
 type Props = {
-  leftMenu: MenuItemType[];
-  rightMenu: MenuItemType[];
-  subMenu?: MenuItemType[];
-};
+  leftMenu: MenuItemType[]
+  rightMenu: MenuItemType[]
+  subMenu?: MenuItemType[]
+}
 
 const MenuDrawer = ({ leftMenu, rightMenu }: Props) => {
-  const { logout } = useAuth();
-  const { user } = useUser();
-  const theme = useTheme();
-  const { t } = useTranslation();
-  const [state, setState] = useState<{ anchorLeft: HTMLElement | null; anchorRight: HTMLElement | null; }>({ anchorLeft: null, anchorRight: null });
+  const { logout } = useAuth()
+  const { user } = useUser()
+  const theme = useTheme()
+  const { t } = useTranslation()
+  const [state, setState] = useState<{ anchorLeft: HTMLElement | null anchorRight: HTMLElement | null }>({ anchorLeft: null, anchorRight: null })
 
-  const { anchorLeft, anchorRight } = state;
-  const isLeftOpen = useMemo(() => Boolean(anchorLeft), [anchorLeft]);
-  const isRightOpen = useMemo(() => Boolean(anchorRight), [anchorRight]);
-  const css = useMemo(() => styles(theme), [theme]);
-  const userName = user ? user.name : '';
+  const { anchorLeft, anchorRight } = state
+  const isLeftOpen = useMemo(() => Boolean(anchorLeft), [anchorLeft])
+  const isRightOpen = useMemo(() => Boolean(anchorRight), [anchorRight])
+  const css = useMemo(() => styles(theme), [theme])
+  const userName = user ? user.name : ''
 
   const handleRightMenu = useCallback((event: unknown) => setState((prev) => ({
     ...prev,
     anchorRight: event.currentTarget,
-  })), []);
+  })), [])
 
   const handleLeftMenu = useCallback((event: MouseEvent<HTMLElement>) => {
     if (!user) {
-      return;
+      return
     }
     setState((prev) => ({
       ...prev,
       anchorLeft: event.currentTarget,
-    }));
-  }, [user]);
+    }))
+  }, [user])
 
   const handleClose = useCallback(() => {
-    setState((prev) => ({ ...prev, anchorLeft: null, anchorRight: null }));
-  }, []);
+    setState((prev) => ({ ...prev, anchorLeft: null, anchorRight: null }))
+  }, [])
 
-  const leftVisible = useMemo(() => leftMenu.filter((menu) => user && menu.isVisible(user)), [leftMenu, user]);
-  const rightVisible = useMemo(() => rightMenu.filter((menu) => user && menu.isVisible(user)), [rightMenu, user]);
+  const leftVisible = useMemo(() => leftMenu.filter((menu) => user && menu.isVisible(user)), [leftMenu, user])
+  const rightVisible = useMemo(() => rightMenu.filter((menu) => user && menu.isVisible(user)), [rightMenu, user])
 
   const renderMenu = useCallback((menus: MenuItemType[]) => {
     return menus.map((item) => (
@@ -103,10 +103,10 @@ const MenuDrawer = ({ leftMenu, rightMenu }: Props) => {
         )}
         <ListItemText primary={t(item.label)} />
       </MenuItem>
-    ));
-  }, [handleClose, t]);
+    ))
+  }, [handleClose, t])
 
-  console.log('TEST', theme);
+  console.log('TEST', theme)
   return (
     <div css={css.root}>
       <CssBaseline />
@@ -150,7 +150,7 @@ const MenuDrawer = ({ leftMenu, rightMenu }: Props) => {
                   aria-haspopup="true"
                 >
                   <Typography noWrap variant="button">
-                    { userName }&nbsp;
+                    { userName }&nbsp
                   </Typography>
                   <UserAvatar userId={user.id} />
                 </Button>
@@ -219,7 +219,7 @@ const MenuDrawer = ({ leftMenu, rightMenu }: Props) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MenuDrawer;
+export default MenuDrawer

@@ -18,9 +18,9 @@ const pushMessage = (messages: string[], message?: string | false) => {
 
 const styles = (theme: ThemeOptions) => ({
   backdrop: css`
-      color: #fff;
-      flex-direction: column;
-      z-index: ${theme.zIndex!.modal! + 1};
+      color: #fff
+      flex-direction: column
+      z-index: ${theme.zIndex!.modal! + 1}
     `
 })
 

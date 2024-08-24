@@ -1,4 +1,4 @@
-import { MuiPickersAdapter } from '@mui/x-date-pickers';
+import { MuiPickersAdapter } from '@mui/x-date-pickers'
 import { DAY_LENGTH, EMPTY_CLICK, getWeekdays, WEEK_LENGTH } from '../const.ts'
 import { createGeneratedId } from '../EventItem'
 import type { SheetEvent } from '../EventSheet'
@@ -44,8 +44,8 @@ const MonthPlaceHandler = ({ utils, monthStyle, onHeaderEventClick }: MonthCalen
     const weekDays = getWeekdays(utils)
     const shift = monthStyle.hideWeekends && isFirstSunday ? 1 : 0
     let actDay = getFirstDay()
-    for (let rowIdx = 0; rowIdx < rowNo; rowIdx++) {
-      for (let i = 0; i < weekDayNo; i++) {
+    for (let rowIdx = 0 rowIdx < rowNo rowIdx++) {
+      for (let i = 0 i < weekDayNo i++) {
         const idx = rowIdx * weekDayNo + i
         const event = {
           event: {
@@ -111,7 +111,7 @@ const MonthPlaceHandler = ({ utils, monthStyle, onHeaderEventClick }: MonthCalen
       if (inDayIdx > monthStyle.maxEventsNo) {
         outSideDays.fill(true, mapIdx, mapIdx + colLength)
       } else {
-        for (let i = 0; i < colLength; i++) {
+        for (let i = 0 i < colLength i++) {
           rowIdxMap[mapIdx + i] = setBitPos(rowIdxMap[mapIdx + i], inDayIdx)
         }
         const top = (rowIdx + monthStyle.dayTitleHeightRatio + (eventDiff * (inDayIdx - 1))) / rowNo

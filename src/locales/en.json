@@ -22,7 +22,7 @@
     "unlimited": "Unlimited",
     "pcs": "pcs",
     "filter": "Filter",
-    "language": "Választott nyelv",
+    "language": "Choice language",
     "confirm": "Confirmation",
     "warning": "Warning",
     "modifySuccess": "Modification Success",
@@ -139,7 +139,7 @@
   "addMemberState": {
     "GROUP_MEMBER": "Group member",
     "OUTER_MEMBER": "Other group member",
-    "OTHER_USER": "Not registrated User"
+    "OTHER_USER": "Not registered User"
   },
   "memberState": {
     "ACCEPTED": "Accepted",
@@ -199,9 +199,9 @@
     "maxMembershipError": "Sorry, the training reached the maximum number of peoples, try to register for another time!",
     "membershipExists": "You ara already has contact with the trainer, only the trainer can add more group memberships!",
     "trainerOwnGroup": "You are the owner in this group!",
-    "groupInviteOnly": "You can join this group onyl, if trainer invites you!",
-    "cancellationOutranged": "Your time range to change join request is expired, please consult with your trainer!",
-    "joinRequestOutranged": "The training has started, join request expired!",
+    "groupInviteOnly": "You can join this group only, if trainer invites you!",
+    "cancellationOutRanged": "Your time range to change join request is expired, please consult with your trainer!",
+    "joinRequestOutRanged": "The training has started, join request expired!",
     "groupTypeChangeIfNotAttached": "You can change group type only if there are no attached groups!",
     "trainerRequestExists": "{{ trainer }} asked you to join the trainings. Please check the group and decide if you want to join.",
     "maxAvatarSize": "The avatar size can not be bigger then 100 Kilobyte !",

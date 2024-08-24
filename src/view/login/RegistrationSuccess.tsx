@@ -1,19 +1,19 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Link, useLocation } from 'react-router-dom';
-import { Button } from '@mui/material';
-import { useAuth, AuthState } from '../../hooks/auth';
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useLocation } from 'react-router-dom'
+import { Button } from '@mui/material'
+import { useAuth, AuthState } from '../../hooks/auth'
 
 export const useQuery = () => {
-  return new URLSearchParams(useLocation().search);
-};
+  return new URLSearchParams(useLocation().search)
+}
 
 const RegistrationSuccess = () => {
-  const query = useQuery();
-  const { authState } = useAuth();
-  const { t } = useTranslation();
+  const query = useQuery()
+  const { authState } = useAuth()
+  const { t } = useTranslation()
 
-  const action = query.get('action');
+  const action = query.get('action')
 
   return (
     <div className="vertical">
@@ -32,7 +32,7 @@ const RegistrationSuccess = () => {
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RegistrationSuccess;
+export default RegistrationSuccess

@@ -1,73 +1,73 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Avatar, Box, Divider, IconButton, List, ListItem, ListItemAvatar, Modal, Typography } from '@mui/material';
-import { AddCircle, Event as EventIcon } from '@mui/icons-material';
-import { User, useUser } from '../../hooks/user';
-import ModalContainer from '../common/ModalContainer';
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Avatar, Box, Divider, IconButton, List, ListItem, ListItemAvatar, Modal, Typography } from '@mui/material'
+import { AddCircle, Event as EventIcon } from '@mui/icons-material'
+import { User, useUser } from '../../hooks/user'
+import ModalContainer from '../common/ModalContainer'
 import {
   convertGroupToUi,
   TrainingGroupType,
   TrainingGroupUIType,
-} from '../../hooks/trainer';
-import { useDialog } from '../../hooks/dialog';
-import { useFirestore } from '../../hooks/firestore/firestore';
+} from '../../hooks/trainer'
+import { useDialog } from '../../hooks/dialog'
+import { useFirestore } from '../../hooks/firestore/firestore'
 
 interface Props {
-  trainer?: User;
-  closeModal: () => void;
+  trainer?: User
+  closeModal: () => void
 }
 
 const SearchGroupPopup = ({ trainer, closeModal }: Props) => {
-  const { t } = useTranslation();
-  const groupService = useFirestore<TrainingGroupType>(`trainers/${trainer?.id}/groups`);
-  const { showConfirmDialog, showDialog } = useDialog();
+  const { t } = useTranslation()
+  const groupService = useFirestore<TrainingGroupType>(`trainers/${trainer?.id}/groups`)
+  const { showConfirmDialog, showDialog } = useDialog()
 
-  const { user, cronConverter, addGroupMembership } = useUser();
+  const { user, cronConverter, addGroupMembership } = useUser()
 
-  const [groups, setGroups] = useState<TrainingGroupUIType[]>([]);
+  const [groups, setGroups] = useState<TrainingGroupUIType[]>([])
 
   const joinToGroup = useCallback((group: TrainingGroupUIType) => {
     if (user!.id === trainer!.id) {
       showDialog({
         title: 'common.warning',
         description: 'warning.trainerOwnGroup',
-      });
-      return;
+      })
+      return
     }
     if (group.inviteOnly) {
       showDialog({
         title: 'common.warning',
         description: 'warning.groupInviteOnly',
-      });
-      return;
+      })
+      return
     }
     if (user!.memberships && user!.memberships.some((member) => member.trainerId === trainer!.id)) {
       showDialog({
         title: 'common.warning',
         description: 'warning.membershipExists',
-      });
-      return;
+      })
+      return
     }
     showConfirmDialog({
       description: t('confirm.userRequest'),
       okCallback: () => {
         addGroupMembership(trainer!, group).then(() => {
-          closeModal();
-        });
+          closeModal()
+        })
       },
-    });
-  }, [addGroupMembership, closeModal, showConfirmDialog, showDialog, t, trainer, user]);
+    })
+  }, [addGroupMembership, closeModal, showConfirmDialog, showDialog, t, trainer, user])
 
   useEffect(() => {
     if (!trainer) {
-      return setGroups([]);
+      return setGroups([])
     }
     groupService.listAll().then(
-      (dbGroups) => setGroups(dbGroups.map((group) => convertGroupToUi(group, cronConverter))));
-  }, [cronConverter, groupService, trainer]);
+      (dbGroups) => setGroups(dbGroups.map((group) => convertGroupToUi(group, cronConverter))))
+  }, [cronConverter, groupService, trainer])
 
   if (!trainer) {
-    return null;
+    return null
   }
   return (
     <Modal
@@ -89,7 +89,7 @@ const SearchGroupPopup = ({ trainer, closeModal }: Props) => {
                   <Typography color="inherit" sx={{ flex: 1, width: '50%' }}>{ group.name }</Typography>
                   <Box sx={{ width: '50%' }}>
                     {group.crons.map((cron, gidx) => (
-                      <div key={`${idx}-${gidx}`}>{cron.days.join(',')}&nbsp;&nbsp;{cron.time}</div>
+                      <div key={`${idx}-${gidx}`}>{cron.days.join(',')}&nbsp&nbsp{cron.time}</div>
                     ))}
                   </Box>
                   <Box sx={{ width: '40px' }}>
@@ -105,7 +105,7 @@ const SearchGroupPopup = ({ trainer, closeModal }: Props) => {
         </List>
       </ModalContainer>
     </Modal>
-  );
-};
+  )
+}
 
-export default SearchGroupPopup;
+export default SearchGroupPopup

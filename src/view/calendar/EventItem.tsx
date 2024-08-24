@@ -1,6 +1,6 @@
 import { FC, FunctionComponent, MouseEvent, useCallback, useMemo } from 'react'
-import { MuiPickersAdapter } from '@mui/x-date-pickers';
-import { AdapterFormats } from '@mui/x-date-pickers/models/adapters';
+import { MuiPickersAdapter } from '@mui/x-date-pickers'
+import { AdapterFormats } from '@mui/x-date-pickers/models/adapters'
 
 import { EMPTY_CLICK, useUtils } from './const.ts'
 

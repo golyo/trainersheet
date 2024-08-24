@@ -7,7 +7,7 @@ interface GroupContextType {
   loadEvent: (eventId: string) => Promise<TrainerEvent>
   group: TrainingGroupUIType | undefined
   groupMembers: MembershipType[]
-  updateMembershipState: (membership: MembershipType, toState: MemberState | null) => Promise<unknown>
+  updateMembershipState: (membership: MembershipType, toState: MemberState | null) => Promise<MembershipType>
 }
 
 const GroupContext = createContext<GroupContextType>({} as GroupContextType)

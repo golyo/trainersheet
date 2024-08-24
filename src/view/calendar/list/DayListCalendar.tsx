@@ -7,7 +7,7 @@ import EventList from './EventList'
 import LoadIndicator from '../LoadIndicator'
 
 import './DayListCalendar.css'
-import { TrainerEvent } from '../../../hooks/event';
+import { TrainerEvent } from '../../../hooks/event'
 
 interface DayListCalendarProps extends CalendarProps<TrainerEvent> {
   dayCacheRange?: number
@@ -20,12 +20,12 @@ interface EventCache {
 
 const DayListCalendar = ({ eventProvider, dayCacheRange = 10, onEventClick }: DayListCalendarProps) => {
   const { actualDate } = useCalendarContext()
-  const utils = useUtils();
+  const utils = useUtils()
   const [eventCache, setEventCache] = useState<EventCache>()
   const actualFrom = useMemo(() => utils.startOfDay(actualDate), [actualDate, utils])
 
   useEffect(() => {
-    const time = utils.toJsDate(actualDate).getTime();
+    const time = utils.toJsDate(actualDate).getTime()
     if (eventCache && eventCache.from.getTime() <= time &&
       (eventCache.from.getTime() + (DAY_LENGTH * 2 * dayCacheRange) > time)) {
       return

@@ -1,67 +1,66 @@
-import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import { useCallback, useMemo, useState } from 'react';
-import { Avatar, Button, Divider, IconButton, List, ListItem } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { Delete, Event as EventIcon } from '@mui/icons-material';
-import ModalContainer from '../../common/ModalContainer';
-import { getInterval, TrainerEvent } from '../../../hooks/event';
-import TrainerActionsPopup from './TrainerActionsPopup';
-import { GroupType, useTrainer } from '../../../hooks/trainer';
-import { useDialog } from '../../../hooks/dialog';
-import NewEventMemberPopup from './NewEventMemberPopup';
+import Typography from '@mui/material/Typography'
+import Modal from '@mui/material/Modal'
+import { useCallback, useMemo, useState } from 'react'
+import { Avatar, Button, Divider, IconButton, List, ListItem } from '@mui/material'
+import { useTranslation } from 'react-i18next'
+import { Delete, Event as EventIcon } from '@mui/icons-material'
+import ModalContainer from '../../common/ModalContainer'
+import { getInterval, TrainerEvent } from '../../../hooks/event'
+import TrainerActionsPopup from './TrainerActionsPopup'
+import { GroupType, useTrainer } from '../../../hooks/trainer'
+import { useDialog } from '../../../hooks/dialog'
+import NewEventMemberPopup from './NewEventMemberPopup'
 
 interface Props {
-  selectedEvent: TrainerEvent;
-  groupType: GroupType;
-  resetEvent: () => void;
+  selectedEvent: TrainerEvent
+  groupType: GroupType
+  resetEvent: () => void
 }
 
 const TrainerEventPopup = ({ selectedEvent, groupType, resetEvent }: Props) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
-  const [event, setEvent] = useState<TrainerEvent>(selectedEvent);
+  const [event, setEvent] = useState<TrainerEvent>(selectedEvent)
 
-  const { activateEvent, removeMemberFromEvent, deleteEvent, members } = useTrainer();
+  const { activateEvent, removeMemberFromEvent, deleteEvent, members } = useTrainer()
   
-  const { showConfirmDialog } = useDialog();
+  const { showConfirmDialog } = useDialog()
 
   const memberNames = useMemo(() => {
     if (!event) {
-      return [];
+      return []
     }
-    return event.memberIds.map((mid) => members.find((m) => m.id === mid)?.name || mid);
-  }, [event, members]);
+    return event.memberIds.map((mid) => members.find((m) => m.id === mid)?.name || mid)
+  }, [event, members])
 
-  const interval = useMemo(() => event ? getInterval(event) : '', [event]);
+  const interval = useMemo(() => event ? getInterval(event) : '', [event])
 
-  const isStarted = useMemo(() => Date.now() > event.start.getTime(), [event.start]);
+  const isStarted = useMemo(() => Date.now() > event.start.getTime(), [event.start])
 
   const doWork = useCallback((confirmKey: string, work: (event: TrainerEvent) => Promise<unknown>) => {
     showConfirmDialog({
       description: confirmKey,
       okCallback: () => {
         work(event).then(() => {
-          resetEvent();
-        });
+          resetEvent()
+        })
       },
-    });
-  }, [event, resetEvent, showConfirmDialog]);
+    })
+  }, [event, resetEvent, showConfirmDialog])
 
-  const isMemberExists = useCallback((memberId: string) => members.some((m) => m.id === memberId), [members]);
+  const isMemberExists = useCallback((memberId: string) => members.some((m) => m.id === memberId), [members])
 
   const removeMember = useCallback((memberId: string) => {
     showConfirmDialog({
       description: t('confirm.removeFromEvent'),
       okCallback: () => {
-        removeMemberFromEvent(event, memberId, true).then((dbEvent) => setEvent!(dbEvent));
+        removeMemberFromEvent(event, memberId, true).then((dbEvent) => setEvent!(dbEvent))
       },
-    });
-  }, [event, removeMemberFromEvent, setEvent, showConfirmDialog, t]);
+    })
+  }, [event, removeMemberFromEvent, setEvent, showConfirmDialog, t])
 
-  const doActivateEvent = useCallback(() => doWork('confirm.activateEvent', activateEvent), [activateEvent, doWork]);
-  const doDeleteEvent = useCallback(() => doWork('confirm.deleteEvent', deleteEvent), [deleteEvent, doWork]);
+  const doActivateEvent = useCallback(() => doWork('confirm.activateEvent', activateEvent), [activateEvent, doWork])
+  const doDeleteEvent = useCallback(() => doWork('confirm.deleteEvent', deleteEvent), [deleteEvent, doWork])
 
   return (
     <Modal
@@ -104,7 +103,7 @@ const TrainerEventPopup = ({ selectedEvent, groupType, resetEvent }: Props) => {
         </div>
       </ModalContainer>
     </Modal>
-  );
-};
+  )
+}
 
-export default TrainerEventPopup;
+export default TrainerEventPopup

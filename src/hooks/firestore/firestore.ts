@@ -77,14 +77,14 @@ export const changeItem : <T extends { id: string }> (items: T[], newItem: T) =>
 
 export const createDatePropertiesWithConverter = (properties: string[]) => ({
   toFirestore: (object: DataWithId) => {
-    const newobj = idConverter.toFirestore(object)
+    const newObj = idConverter.toFirestore(object)
     properties.forEach((prop) => {
       const val = get(object, prop) as Date
       if (val) {
         set(object, prop, val.getTime())
       }
     })
-    return newobj
+    return newObj
   },
   fromFirestore: (snapshot: QueryDocumentSnapshot, options: SnapshotOptions) => {
     const object = idConverter.fromFirestore(snapshot, options)

@@ -1,26 +1,26 @@
-import { useEffect, useState } from 'react';
-import { getNextEventFrom, getNextEventTo, TrainerEvent } from '../../../hooks/event';
-import { Avatar, Badge, IconButton, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { useUser } from '../../../hooks/user';
-import { useTrainer } from '../../../hooks/trainer';
-import { Event as EventIcon, Groups } from '@mui/icons-material';
-import { Link, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { getNextEventFrom, getNextEventTo, TrainerEvent } from '../../../hooks/event'
+import { Avatar, Badge, IconButton, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
+import { useTranslation } from 'react-i18next'
+import { useUser } from '../../../hooks/user'
+import { useTrainer } from '../../../hooks/trainer'
+import { Event as EventIcon, Groups } from '@mui/icons-material'
+import { Link, useParams } from 'react-router-dom'
 
-const H5 = 'h5' as const;
-const H3 = 'h3' as const;
+const H5 = 'h5' as const
+const H3 = 'h3' as const
 
 export default function TrainerEvents() {
-  const { groupId } = useParams<{ groupId: string }>();
-  const { t } = useTranslation();
-  const { getDateRangeStr } = useUser();
-  const { eventProvider } = useTrainer();
-  const [events, setEvents] = useState<TrainerEvent[]>([]);
+  const { groupId } = useParams<{ groupId: string }>()
+  const { t } = useTranslation()
+  const { getDateRangeStr } = useUser()
+  const { eventProvider } = useTrainer()
+  const [events, setEvents] = useState<TrainerEvent[]>([])
   
   useEffect(() => {
-    eventProvider.setGroupRestriction(groupId);
-    eventProvider.getEvents(getNextEventFrom(120), getNextEventTo()).then((tevents) => setEvents(tevents));
-  }, [eventProvider, groupId]);
+    eventProvider.setGroupRestriction(groupId)
+    eventProvider.getEvents(getNextEventFrom(120), getNextEventTo()).then((tevents) => setEvents(tevents))
+  }, [eventProvider, groupId])
 
   return (
     <div className="vertical">
@@ -51,5 +51,5 @@ export default function TrainerEvents() {
         ))}
       </List>
     </div>
-  );
+  )
 }

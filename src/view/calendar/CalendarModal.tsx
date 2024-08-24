@@ -53,7 +53,7 @@ const CalendarModal = ({
       }} ref={modalContainerRef}>
         <div className="dialog-header">
           {title}
-          {closeModal && <span className="dialog-close" onClick={onCloseClick}>&times;</span>}
+          {closeModal && <span className="dialog-close" onClick={onCloseClick}>&times</span>}
         </div>
         <div>
           {children}

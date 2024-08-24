@@ -1,25 +1,25 @@
-import { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Button, IconButton, Modal, TextField } from '@mui/material';
-import { Edit } from '@mui/icons-material';
-import { MembershipType, useTrainer } from '../../../hooks/trainer';
-import ModalContainer from '../../common/ModalContainer';
-import LabelValue from '../../common/LabelValue';
-import { TicketSheet } from '../../../hooks/trainer/TrainerContext';
+import { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Button, IconButton, Modal, TextField } from '@mui/material'
+import { Edit } from '@mui/icons-material'
+import { MembershipType, useTrainer } from '../../../hooks/trainer'
+import ModalContainer from '../../common/ModalContainer'
+import LabelValue from '../../common/LabelValue'
+import { TicketSheet } from '../../../hooks/trainer/TrainerContext'
 
 const ModifyTicketPopup = ({ membership, sheet }: { membership: MembershipType, sheet: TicketSheet }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   
-  const { updateMembership } = useTrainer();
-  const [open, setOpen] = useState(false);
-  const [newValue, setNewValue] = useState<number>(sheet.remainingEventNo);
-  const openModal = useCallback(() => setOpen(true), []);
-  const closeModal = useCallback(() => setOpen(false), []);
+  const { updateMembership } = useTrainer()
+  const [open, setOpen] = useState(false)
+  const [newValue, setNewValue] = useState<number>(sheet.remainingEventNo)
+  const openModal = useCallback(() => setOpen(true), [])
+  const closeModal = useCallback(() => setOpen(false), [])
 
   const updateTicketEvent = useCallback(() => {
-    sheet.remainingEventNo = newValue;
-    updateMembership(membership).then(() => closeModal());
-  }, [closeModal, membership, newValue, sheet, updateMembership]);
+    sheet.remainingEventNo = newValue
+    updateMembership(membership).then(() => closeModal())
+  }, [closeModal, membership, newValue, sheet, updateMembership])
 
   return (
     <>
@@ -60,7 +60,7 @@ const ModifyTicketPopup = ({ membership, sheet }: { membership: MembershipType, 
         </ModalContainer>
       </Modal>
     </>
-  );
+  )
 };
 
 export default ModifyTicketPopup;

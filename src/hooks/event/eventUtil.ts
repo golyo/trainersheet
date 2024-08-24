@@ -1,11 +1,11 @@
 import * as parser from 'cron-parser'
 import { User, TrainerContactMembership, TrainerGroups } from '../../hooks/user'
 import { UserEventProvider, TrainerEvent } from './EventContext'
-import { TrainerContact } from '../user/UserContext'
+import { TrainerContact } from '../user'
 import { Firestore, getDoc, doc, where, setDoc } from 'firebase/firestore'
 import { doQuery, getCollectionRef } from '../firestore/firestore'
 import { TrainingGroupType, findOrCreateSheet } from '../trainer'
-import { CalendarEvent } from '../../view/calendar/types.ts';
+import { CalendarEvent } from '../../view/calendar/types.ts'
 
 const NEXT_EVENT_DAYNO = 28
 const NEXT_EVENTS_RANGE = NEXT_EVENT_DAYNO * 24 * 60 * 60 * 1000
@@ -85,7 +85,7 @@ const changeCounterToMembership = (firestore: Firestore, user: User, groupMember
   return setDoc(docRef, groupMembership.membership)
 }
 
-const MAX_MEMBERSHIP_ERROR = 'error.maxMembershipRiched'
+const MAX_MEMBERSHIP_ERROR = 'error.maxMembershipRiches'
 const EVENT_DELETED_ERROR = 'error.eventDeleted'
 export const isMaxMembershipError = (error: string) => error === MAX_MEMBERSHIP_ERROR
 

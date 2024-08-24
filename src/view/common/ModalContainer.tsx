@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import * as React from 'react'
 import { useMemo } from 'react'
 import { AppBar, Box, Grow, IconButton, Toolbar, Typography } from '@mui/material'
 import { Close } from '@mui/icons-material'

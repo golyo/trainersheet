@@ -1,17 +1,17 @@
-import * as React from 'react';
-import { AppBar, Box, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
-import { AccountCircle, Menu as MenuIcon } from '@mui/icons-material';
+import { useState, MouseEvent } from 'react'
+import { AppBar, Box, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material'
+import { AccountCircle, Menu as MenuIcon } from '@mui/icons-material'
 
 export default function MenuAppBar() {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const handleMenu = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -62,5 +62,5 @@ export default function MenuAppBar() {
           npm install </Toolbar>
       </AppBar>
     </Box>
-  );
+  )
 }

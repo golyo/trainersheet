@@ -1,52 +1,52 @@
-import { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-import { Button, Typography } from '@mui/material';
-import { Delete, Edit, ExpandMore } from '@mui/icons-material';
+import { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+import { Button, Typography } from '@mui/material'
+import { Delete, Edit, ExpandMore } from '@mui/icons-material'
 
 
-import { useDialog } from '../../../hooks/dialog';
-import { useGroup, useTrainer } from '../../../hooks/trainer';
+import { useDialog } from '../../../hooks/dialog'
+import { useGroup, useTrainer } from '../../../hooks/trainer'
 
-import { Accordion, AccordionDetails, AccordionSummary } from '../../common/ZhAccordion';
-import EditGroupPopup from './EditGroupPopup';
-import PublicGroupData from './PublicGroupData';
-import GroupSettingsData from './GroupSettingsData';
+import { Accordion, AccordionDetails, AccordionSummary } from '../../common/ZhAccordion'
+import EditGroupPopup from './EditGroupPopup'
+import PublicGroupData from './PublicGroupData'
+import GroupSettingsData from './GroupSettingsData'
 
 export default function DisplayGroup() {
-  const { t } = useTranslation();
-  const { showConfirmDialog, showDialog } = useDialog();
-  const [showPublic, setShowPublic] = useState<boolean>(true);
-  const navigate = useNavigate();
-  const { attachedGroups, group } = useGroup();
-  const { members, saveGroup, deleteGroup } = useTrainer();
+  const { t } = useTranslation()
+  const { showConfirmDialog, showDialog } = useDialog()
+  const [showPublic, setShowPublic] = useState<boolean>(true)
+  const navigate = useNavigate()
+  const { attachedGroups, group } = useGroup()
+  const { members, saveGroup, deleteGroup } = useTrainer()
 
-  const [edit, setEdit] = useState<boolean>(false);
+  const [edit, setEdit] = useState<boolean>(false)
 
-  const closePopup = useCallback(() => setEdit(false), []);
-  const openPopup = useCallback(() => setEdit(true), []);
+  const closePopup = useCallback(() => setEdit(false), [])
+  const openPopup = useCallback(() => setEdit(true), [])
 
-  const toggleAccordion = useCallback(() => setShowPublic((prev) => !prev), []);
+  const toggleAccordion = useCallback(() => setShowPublic((prev) => !prev), [])
 
   const doDelete = useCallback(() => {
     if (members.length > 0) {
       showDialog({
         title: 'common.warning',
         description: 'warning.deleteGroup',
-      });
-      return;
+      })
+      return
     }
     showConfirmDialog({
       description: 'trainingGroup.deleteConfirm',
       okCallback: () => {
-        navigate('/groups');
-        deleteGroup(group!.id);
+        navigate('/groups')
+        deleteGroup(group!.id)
       },
-    });
-  }, [deleteGroup, group, members.length, navigate, showConfirmDialog, showDialog]);
+    })
+  }, [deleteGroup, group, members.length, navigate, showConfirmDialog, showDialog])
 
   if (!group) {
-    return null;
+    return null
   }
 
   return (
@@ -78,5 +78,5 @@ export default function DisplayGroup() {
 
       <EditGroupPopup trainingGroup={group} closePopup={closePopup} isOpen={edit} saveGroup={saveGroup} />
     </>
-  );
+  )
 }

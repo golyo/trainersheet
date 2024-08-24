@@ -6,7 +6,7 @@ import CalendarContext, {
   type MonthCalendarStyle,
   type WeekCalendarStyle
 } from './CalendarContext.ts'
-import { useUtils } from '../const.ts';
+import { useUtils } from '../const.ts'
 
 interface CalendarContextProviderType {
   initialDate?: Date

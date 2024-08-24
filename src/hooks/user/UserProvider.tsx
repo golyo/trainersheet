@@ -24,7 +24,7 @@ import { Firestore, where } from 'firebase/firestore'
 import { createCronConverter } from './cronUtils'
 import { createUserEventProvider, getInterval, TrainerEvent, UserEventProvider } from '../event'
 import useStorage from '../firebase/useStorage'
-import { useUtils } from '../../view/calendar/const.ts';
+import { useUtils } from '../../view/calendar/const.ts'
 
 export const loadGroups = (firestore: Firestore, trainerId: string) =>
   doQuery(firestore, `trainers/${trainerId}/groups`)
@@ -96,7 +96,7 @@ const UserProvider = ({ children }: { children: Iterable<ReactNode> }) => {
   const userSrv = useFirestore<User>('users')
   const { authUser } = useAuth()
   const { uploadAvatar, getAvatarUrl } = useStorage()
-  const utils = useUtils();
+  const utils = useUtils()
 
   const [user, setUser] = useState<User | undefined>()
   const [groupMemberships, setGroupMemberships] = useState<TrainerContactMembership[]>([])
@@ -111,11 +111,11 @@ const UserProvider = ({ children }: { children: Iterable<ReactNode> }) => {
     }))
   }, [])
 
-  const uploadAvatarIfExists = useCallback((usr: User, pauthUser?: AuthUser) => {
+  const uploadAvatarIfExists = useCallback((usr: User, pAuthUser?: AuthUser) => {
     // TODO
-    if (pauthUser?.photoURL) {
+    if (pAuthUser?.photoURL) {
       getAvatarUrl(usr.id).then(() => {}, () => {
-        fetch(pauthUser!.photoURL!).then((response) => {
+        fetch(pAuthUser!.photoURL!).then((response) => {
           response.blob().then((blob) => {
             uploadAvatar(blob, usr.id).then(userChanged)
           })
@@ -159,8 +159,8 @@ const UserProvider = ({ children }: { children: Iterable<ReactNode> }) => {
   }, [changeUser, firestore, user, userSrv])
 
   const getDateRangeStr = useCallback((event: TrainerEvent) => {
-    const udate = utils.date(event.start.toISOString())
-    return utils.format(udate!, 'shortDate') + ' ' + getInterval(event)
+    const update = utils.date(event.start.toISOString())
+    return utils.format(update!, 'shortDate') + ' ' + getInterval(event)
   }, [utils])
 
   const changeTrainerContactState = useCallback(async (membership: TrainerContactMembership, toState: MemberState | null) => {
@@ -200,10 +200,10 @@ const UserProvider = ({ children }: { children: Iterable<ReactNode> }) => {
     const group = membership.contactGroups[idx]
     membership.contactGroups.splice(idx, 1)
     setMember(firestore, user!, membership).then(() => {
-      group.attachedGroups.forEach((agroupId) => {
-        if (!membership.contactGroups.some((dg) => dg.attachedGroups.includes(agroupId))) {
-          const aidx = membership.contactGroups.findIndex((dg) => dg.id === agroupId)
-          membership.contactGroups.splice(aidx, 1)
+      group.attachedGroups.forEach((aGroupId) => {
+        if (!membership.contactGroups.some((dg) => dg.attachedGroups.includes(aGroupId))) {
+          const aIdx = membership.contactGroups.findIndex((dg) => dg.id === aGroupId)
+          membership.contactGroups.splice(aIdx, 1)
         }
       })
       setGroupMemberships((prev) => changeItemByEqual(prev, membership, isTrainerEqual))
@@ -221,13 +221,13 @@ const UserProvider = ({ children }: { children: Iterable<ReactNode> }) => {
     return addUserRequest(firestore, trainer.id, user!, group).then(() => loadGroupMemberships(user!))
   }, [firestore, loadGroupMemberships, saveUser, user])
 
-  const loadUser = useCallback((pauthUser: AuthUser) => {
-    userSrv.get(HACK_USER || pauthUser!.email!).then((dbUser: User) => {
+  const loadUser = useCallback((pAuthUser: AuthUser) => {
+    userSrv.get(HACK_USER || pAuthUser!.email!).then((dbUser: User) => {
       if (dbUser) {
         if (!dbUser.registrationDate) {
           // FIRST LOGIN
           const toSave = {
-            ...createDBUser(pauthUser!),
+            ...createDBUser(pAuthUser!),
             ...dbUser,
           }
           userSrv.save(toSave as User, true, false).then(() => changeUser(dbUser))
@@ -237,7 +237,7 @@ const UserProvider = ({ children }: { children: Iterable<ReactNode> }) => {
           loadGroupMemberships(dbUser)
         }
       } else {
-        const toSave = createDBUser(pauthUser!)
+        const toSave = createDBUser(pAuthUser!)
         userSrv.save(toSave, true, false).then(() => {
           changeUser(toSave)
         })

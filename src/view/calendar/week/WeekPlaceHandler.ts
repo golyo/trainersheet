@@ -4,7 +4,7 @@ import { startDateOrder } from '../month/MonthPlaceHandler'
 import { createGeneratedId } from '../EventItem'
 import { type SheetEvent } from '../EventSheet'
 import { type CalendarEvent, type EventClick } from '../types'
-import { MuiPickersAdapter } from '@mui/x-date-pickers';
+import { MuiPickersAdapter } from '@mui/x-date-pickers'
 
 const BEFORE_COL_NO = 1
 const HOUR_MARK_HEIGHT = 0.02
@@ -234,7 +234,7 @@ const WeekPlaceHandler = ({ utils, hideWeekends, maxEventNo, minEventHeight = 0,
     }
   })
   const appendHourEvents = (events: SheetEvent[], onEventClick: EventClick) => {
-    for (let i = 0; i < HOUR_NO; i++) {
+    for (let i = 0 i < HOUR_NO i++) {
       const event = {
         event: {
           id: createGeneratedId(`hour-${i}`),
@@ -263,7 +263,7 @@ const WeekPlaceHandler = ({ utils, hideWeekends, maxEventNo, minEventHeight = 0,
     events.push(getGmtEvent())
     const weekDays = getWeekdays(utils)
     const shift = hideWeekends && isFirstSunday ? 1 : 0
-    for (let i = 0; i < weekDayNo; i++) {
+    for (let i = 0 i < weekDayNo i++) {
       const actDay = utils.addDays(firstWeekDay, i)
       const event = {
         event: {

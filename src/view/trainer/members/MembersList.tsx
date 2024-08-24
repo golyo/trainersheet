@@ -1,5 +1,5 @@
-import { ChangeEvent, useCallback, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { ChangeEvent, useCallback, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Box,
   Chip,
@@ -10,33 +10,33 @@ import {
   MenuItem,
   TextField,
   Typography,
-} from '@mui/material';
+} from '@mui/material'
 
-import NewMemberPopup from './NewMemberPopup';
-import { MemberState, useGroup, findOrCreateSheet } from '../../../hooks/trainer';
-import MemberDetailPopup from './MemberDetailPopup';
-import { TicketNoWarning } from '../events/EventPage';
-import UserAvatar from '../../common/UserAvatar';
+import NewMemberPopup from './NewMemberPopup'
+import { MemberState, useGroup, findOrCreateSheet } from '../../../hooks/trainer'
+import MemberDetailPopup from './MemberDetailPopup'
+import { TicketNoWarning } from '../events/EventPage'
+import UserAvatar from '../../common/UserAvatar'
 
-const STATES = Object.values(MemberState) as MemberState[];
+const STATES = Object.values(MemberState) as MemberState[]
 
 const MembersList = () => {
-  const { t } = useTranslation();
-  const [selectedState, setSelectedState] = useState<MemberState | 0>(0);
+  const { t } = useTranslation()
+  const [selectedState, setSelectedState] = useState<MemberState | 0>(0)
 
-  const { groupMembers, group } = useGroup();
+  const { groupMembers, group } = useGroup()
 
   const filteredMembers = useMemo(() => {
     if (!selectedState) {
-      return groupMembers;
+      return groupMembers
     }
-    return groupMembers.filter((member) => member.state === selectedState);
-  }, [groupMembers, selectedState]);
+    return groupMembers.filter((member) => member.state === selectedState)
+  }, [groupMembers, selectedState])
 
-  const handleSelectChange = useCallback((event: ChangeEvent<HTMLInputElement>) => setSelectedState(event.currentTarget.value as MemberState), [setSelectedState]);
+  const handleSelectChange = useCallback((event: ChangeEvent<HTMLInputElement>) => setSelectedState(event.currentTarget.value as MemberState), [setSelectedState])
 
   if (!groupMembers) {
-    return null;
+    return null
   }
   return (
     <>
@@ -83,7 +83,7 @@ const MembersList = () => {
         <NewMemberPopup></NewMemberPopup>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default MembersList;
+export default MembersList

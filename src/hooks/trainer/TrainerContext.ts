@@ -29,8 +29,8 @@ export interface ActionButton {
   toState: MemberState | null
 }
 
-const CONTAINED = 'contained' as const;
-const OUTLINED = 'outlined' as const;
+const CONTAINED = 'contained' as const
+const OUTLINED = 'outlined' as const
 export const getButtonVariant = (buttonIdx: number) => buttonIdx === 0 ? CONTAINED : OUTLINED
 
 export const USER_STATE_MAP: Record<string, ActionButton[]> = {
@@ -112,9 +112,9 @@ export interface MembershipType {
   id: string
   name: string
   avatar?: string
-  state: MemberState
-  groups: string[]
-  ticketSheets: TicketSheet[]
+  state?: MemberState
+  groups?: string[]
+  ticketSheets?: TicketSheet[]
   bonuses?: number[]
 }
 
@@ -131,13 +131,13 @@ export interface TrainingGroupBase {
   name: string
   groupType: GroupType
   attachedGroups: string[]
-  color?: string
+  color: string
   inviteOnly: boolean
-  cancellationDeadline: number
-  ticketLength: number
-  ticketValidity: number
-  duration: number
-  maxMember: number
+  cancellationDeadline?: number
+  ticketLength?: number
+  ticketValidity?: number
+  duration?: number
+  maxMember?: number
   showMembers: boolean
 }
 

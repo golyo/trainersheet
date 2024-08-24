@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
-import { Autocomplete, Button, createFilterOptions, Modal, TextField } from '@mui/material';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useTrainer } from '../../hooks/trainer';
-import ModalContainer from '../common/ModalContainer';
-import { TrainerDataType } from '../../hooks/trainer/TrainerContext.ts';
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
+import { Autocomplete, Button, createFilterOptions, Modal, TextField } from '@mui/material'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useTrainer } from '../../hooks/trainer'
+import ModalContainer from '../common/ModalContainer'
+import { TrainerDataType } from '../../hooks/trainer/TrainerContext.ts'
 
 interface IPResult {
   status: string
@@ -23,15 +23,15 @@ interface IPResult {
 }
 
 const ipApi = () => {
-  return fetch('http://ip-api.com/json').then((res) => res.json());
-};
+  return fetch('http://ip-api.com/json').then((res) => res.json())
+}
 
 const TrainerBaseData = () => {
-  const { t: tc, i18n } = useTranslation('countries');
-  const { t } = useTranslation();
-  const { trainerData, saveTrainerData } = useTrainer();
+  const { t: tc, i18n } = useTranslation('countries')
+  const { t } = useTranslation()
+  const { trainerData, saveTrainerData } = useTrainer()
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   const schema = useMemo(() => yup.object({
     id: yup.string().required(),
@@ -39,45 +39,45 @@ const TrainerBaseData = () => {
     country: yup.string().required(),
     zipCode: yup.string().required(),
     address: yup.string().required(),
-  }), []);
+  }), [])
 
   const { handleSubmit, control, formState: { errors }, setValue } = useForm<TrainerDataType>({
     resolver: yupResolver(schema),
     defaultValues: trainerData,
-  });
+  })
 
   const filterOptions = useMemo(() => createFilterOptions({
     matchFrom: 'start',
     stringify: (option: string) => tc(option, ['countries']),
-  }), [tc]);
+  }), [tc])
 
   const countries = useMemo(() => {
     // force lazy load
-    tc('HU', ['countries']);
-    const cs = i18n.getResourceBundle(i18n.language, 'countries');
-    return cs ? Object.keys(cs) : [];
-  }, [i18n, tc]);
+    tc('HU', ['countries'])
+    const cs = i18n.getResourceBundle(i18n.language, 'countries')
+    return cs ? Object.keys(cs) : []
+  }, [i18n, tc])
 
-  const openModal = useCallback(() => setOpen(true), []);
-  const closeModal = useCallback(() => setOpen(false), []);
+  const openModal = useCallback(() => setOpen(true), [])
+  const closeModal = useCallback(() => setOpen(false), [])
 
   const doChanges = useCallback((values: TrainerDataType) => {
-    saveTrainerData(values).then(() => closeModal());
-  }, [closeModal, saveTrainerData]);
+    saveTrainerData(values).then(() => closeModal())
+  }, [closeModal, saveTrainerData])
 
   useEffect(() => {
     if (!trainerData) {
-      return;
+      return
     }
     if (!trainerData.country) {
       ipApi().then((ipResult: IPResult) => {
-        setValue('country' as keyof TrainerDataType, ipResult.countryCode);
-      });
+        setValue('country' as keyof TrainerDataType, ipResult.countryCode)
+      })
     }
-  }, [i18n, setValue, t, trainerData]);
+  }, [i18n, setValue, t, trainerData])
 
   if (!trainerData) {
-    return <div></div>;
+    return <div></div>
   }
 
   return (
@@ -182,7 +182,7 @@ const TrainerBaseData = () => {
         </ModalContainer>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default TrainerBaseData;
+export default TrainerBaseData

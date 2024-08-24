@@ -1,49 +1,49 @@
-import { useCallback } from 'react';
-import { Controller, FieldValues, useForm } from 'react-hook-form';
-import { Navigate, useNavigate  } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { Button, TextField } from '@mui/material';
-import { AuthState, useAuth } from '../../hooks/auth';
-import BackButton from '../common/BackButton';
+import { useCallback } from 'react'
+import { Controller, FieldValues, useForm } from 'react-hook-form'
+import { Navigate, useNavigate  } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { Button, TextField } from '@mui/material'
+import { AuthState, useAuth } from '../../hooks/auth'
+import BackButton from '../common/BackButton'
 
 const PasswordChange = () => {
-  const navigate = useNavigate();
-  const { handleSubmit, control, setError, formState: { errors } } = useForm();
-  const { t } = useTranslation();
-  const { authUser, authState, updatePassword } = useAuth();
+  const navigate = useNavigate()
+  const { handleSubmit, control, setError, formState: { errors } } = useForm()
+  const { t } = useTranslation()
+  const { authUser, authState, updatePassword } = useAuth()
 
   const changePassword = useCallback((values: FieldValues) => {
-    const { oldPassword, newPassword, passwordCheck } = values;
+    const { oldPassword, newPassword, passwordCheck } = values
     if (newPassword !== passwordCheck) {
       setError('passwordCheck', {
         type: 'manual',
         message: t('login.error.passwordCheck')!,
-      });
-      return;
+      })
+      return
     }
     updatePassword(oldPassword, newPassword).then(() => {
       // TODO clear error messages ?
-      navigate('/registrationSuccess?action=changePassword');
+      navigate('/registrationSuccess?action=changePassword')
     }).catch((err: unknown) => {
       if (err.code.endsWith('wrong-password')) {
         setError('oldPassword', {
           type: 'manual',
           message: t(`login.error.${err.code}`)!,
-        });
+        })
       } else {
         setError('newPassword', {
           type: 'manual',
           message: t(`login.error.${err.code}`)!,
-        });
+        })
       }
-    });
-  }, [navigate, updatePassword, setError, t]);
+    })
+  }, [navigate, updatePassword, setError, t])
 
   if (authState === AuthState.AUTHORIZED) {
-    return <Navigate to="/verification"></Navigate>;
+    return <Navigate to="/verification"></Navigate>
   }
   if (!authUser) {
-    return <Navigate to="/login"></Navigate>;
+    return <Navigate to="/login"></Navigate>
   }
   return (
     <div>
@@ -110,7 +110,7 @@ const PasswordChange = () => {
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default PasswordChange;
+export default PasswordChange

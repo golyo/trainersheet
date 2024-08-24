@@ -1,58 +1,61 @@
-import { useCallback, useMemo, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, MenuItem, Modal, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
-import { AddCircle } from '@mui/icons-material';
-import * as yup from 'yup';
-import ModalContainer from '../../common/ModalContainer';
+import { useCallback, useMemo, useState } from 'react'
+import { Controller, useForm, Resolver } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { Button, MenuItem, Modal, Select, SelectChangeEvent, TextField, Typography } from '@mui/material'
+import { AddCircle } from '@mui/icons-material'
+import * as yup from 'yup'
+import ModalContainer from '../../common/ModalContainer'
 import {
   DEFAULT_MEMBER, MembershipType,
   MemberState,
   useGroup,
   useTrainer,
-} from '../../../hooks/trainer';
+} from '../../../hooks/trainer'
+
+const schema = yup.object({
+  id: yup.string().email().required(),
+  name: yup.string().required(),
+})
+
+const membershipTypeResolver: Resolver<MembershipType> = yupResolver(schema)
 
 const NewMemberPopup = () => {
-  const { t } = useTranslation();
-  const schema = useMemo(() => yup.object({
-    id: yup.string().email().required(),
-    name: yup.string().required(),
-  }), []);
+  const { t } = useTranslation()
 
-  const { groupMembers, updateMembershipState } = useGroup();
+  const { groupMembers, updateMembershipState } = useGroup()
 
-  const { members } = useTrainer();
+  const { members } = useTrainer()
 
   const possibleMembers = useMemo(() => {
-    return members.filter((member) => !groupMembers.some((gm) => gm.id === member.id));
-  }, [groupMembers, members]);
+    return members.filter((member) => !groupMembers.some((gm) => gm.id === member.id))
+  }, [groupMembers, members])
 
-  const [open, setOpen] = useState(false);
-  const { handleSubmit, control, reset, formState: { errors } } = useForm({
-    resolver: yupResolver(schema),
+  const [open, setOpen] = useState(false)
+  const { handleSubmit, control, reset, formState: { errors } } = useForm<MembershipType>({
+    resolver: membershipTypeResolver,
     defaultValues: { ...DEFAULT_MEMBER },
-  });
+  })
 
-  const openModal = useCallback(() => setOpen(true), []);
+  const openModal = useCallback(() => setOpen(true), [])
   const closeModal = useCallback(() => {
-    reset({ ...DEFAULT_MEMBER });
-    setOpen(false);
-  }, [reset]);
+    reset({ ...DEFAULT_MEMBER })
+    setOpen(false)
+  }, [reset])
 
   const modifyData = useCallback((newUser: MembershipType) => {
-    closeModal();
-    return updateMembershipState(newUser, MemberState.TRAINER_REQUEST);
-  }, [closeModal, updateMembershipState]);
+    closeModal()
+    return updateMembershipState(newUser, MemberState.TRAINER_REQUEST)
+  }, [closeModal, updateMembershipState])
 
   const onSelectMember = useCallback((e: SelectChangeEvent) => {
-    const member = possibleMembers.find((m) => m.id === e.target.value);
+    const member = possibleMembers.find((m) => m.id === e.target.value)
     reset({
       ...DEFAULT_MEMBER,
       id: member?.id,
       name: member?.name,
-    });
-  }, [possibleMembers, reset]);
+    })
+  }, [possibleMembers, reset])
 
   return (
     <>
@@ -64,7 +67,7 @@ const NewMemberPopup = () => {
         <ModalContainer variant="big" close={closeModal} open={open} title={t('membership.newMember')}>
           {possibleMembers.length > 0 && <div className="vertical">
             <Typography variant="h5">{t('membership.addOtherGroupMember')}</Typography>
-            <Select onChange={onSelectMember} size="small" defaultValue={'-'}>
+            <Select onChange={onSelectMember} size="small" defaultValue={'-'} variant={'filled'}>
               <MenuItem value={'-'}>-</MenuItem>
               {possibleMembers.map((pm, idx) => (
                 <MenuItem key={idx} value={pm.id}>{pm.name}</MenuItem>
@@ -115,7 +118,7 @@ const NewMemberPopup = () => {
         </ModalContainer>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default NewMemberPopup;
+export default NewMemberPopup

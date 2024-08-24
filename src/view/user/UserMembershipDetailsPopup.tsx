@@ -1,73 +1,73 @@
-import { useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Button, Modal } from '@mui/material';
-import ModalContainer from '../common/ModalContainer';
+import { useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Button, Modal } from '@mui/material'
+import ModalContainer from '../common/ModalContainer'
 import {
   ActionButton,
   convertGroupToUi,
   getButtonVariant,
   MemberState,
   USER_STATE_MAP,
-} from '../../hooks/trainer';
-import LabelValue from '../common/LabelValue';
-import { CronConverter, TrainerContactMembership } from '../../hooks/user';
-import PublicGroupData from '../trainer/group/PublicGroupData';
-import { useDialog } from '../../hooks/dialog';
+} from '../../hooks/trainer'
+import LabelValue from '../common/LabelValue'
+import { CronConverter, TrainerContactMembership } from '../../hooks/user'
+import PublicGroupData from '../trainer/group/PublicGroupData'
+import { useDialog } from '../../hooks/dialog'
 
 interface Props {
-  groupMembership?: TrainerContactMembership;
-  groupId?: string;
-  closeModal: () => void;
-  cronConverter: CronConverter;
-  handleRequest: (member: TrainerContactMembership, toState: MemberState | null) => Promise<void>;
-  leaveGroup: (membership: TrainerContactMembership, groupId: string) => void;
+  groupMembership?: TrainerContactMembership
+  groupId?: string
+  closeModal: () => void
+  cronConverter: CronConverter
+  handleRequest: (member: TrainerContactMembership, toState: MemberState | null) => Promise<void>
+  leaveGroup: (membership: TrainerContactMembership, groupId: string) => void
 }
 
 const UserMembershipDetailPopup = ({ groupMembership, handleRequest, leaveGroup, groupId, closeModal, cronConverter }: Props) => {
-  const { t } = useTranslation();
-  const { showConfirmDialog } = useDialog();
+  const { t } = useTranslation()
+  const { showConfirmDialog } = useDialog()
 
   const group = useMemo(() => {
     if (!groupMembership) {
-      return undefined;
+      return undefined
     }
-    return convertGroupToUi(groupMembership.trainerGroups.find((gr) => gr.id === groupId)!, cronConverter);
-  }, [cronConverter, groupId, groupMembership]);
+    return convertGroupToUi(groupMembership.trainerGroups.find((gr) => gr.id === groupId)!, cronConverter)
+  }, [cronConverter, groupId, groupMembership])
 
   const actionButtons = useMemo(() => {
     if (!groupMembership) {
-      return [];
+      return []
     }
-    return USER_STATE_MAP[groupMembership!.membership.state || ''];
-  }, [groupMembership]);
+    return USER_STATE_MAP[groupMembership!.membership.state || '']
+  }, [groupMembership])
 
   const doAction = useCallback((button: ActionButton) => {
     showConfirmDialog({
       description: t(`confirm.setStateByUser.${button.toState || 'null'}`),
       okCallback: () => {
-        handleRequest(groupMembership!, button.toState);
-        closeModal();
+        handleRequest(groupMembership!, button.toState)
+        closeModal()
       },
-    });
-  }, [closeModal, groupMembership, handleRequest, showConfirmDialog, t]);
+    })
+  }, [closeModal, groupMembership, handleRequest, showConfirmDialog, t])
 
   const canLeave = useMemo(() => {
     if (!groupMembership) {
-      return false;
+      return false
     }
-    const groupIdx = groupMembership.membership.groups.indexOf(group!.id);
-    return groupIdx >= 0 && groupMembership.membership.groups.length > 1;
-  }, [group, groupMembership]);
+    const groupIdx = groupMembership.membership.groups.indexOf(group!.id)
+    return groupIdx >= 0 && groupMembership.membership.groups.length > 1
+  }, [group, groupMembership])
 
   const doLeaveGroup = useCallback(() => {
     showConfirmDialog({
       description: t('confirm.leaveGroup'),
       okCallback: () => {
-        leaveGroup(groupMembership!, group!.id);
-        closeModal();
+        leaveGroup(groupMembership!, group!.id)
+        closeModal()
       },
-    });
-  }, [closeModal, group, groupMembership, leaveGroup, showConfirmDialog, t]);
+    })
+  }, [closeModal, group, groupMembership, leaveGroup, showConfirmDialog, t])
 
   return (
     <>
@@ -100,7 +100,7 @@ const UserMembershipDetailPopup = ({ groupMembership, handleRequest, leaveGroup,
         </ModalContainer>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default UserMembershipDetailPopup;
+export default UserMembershipDetailPopup

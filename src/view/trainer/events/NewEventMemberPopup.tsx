@@ -1,12 +1,12 @@
-import { ChangeEvent, useCallback, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Button, MenuItem, Modal, TextField, Typography } from '@mui/material';
-import { AddCircle } from '@mui/icons-material';
-import ModalContainer from '../../common/ModalContainer';
-import { MembershipType, useTrainer } from '../../../hooks/trainer';
-import { TrainerEvent } from '../../../hooks/event';
-import { getGroupMembers } from '../../../hooks/trainer/GroupProvider';
-import LabelValue from '../../common/LabelValue';
+import { ChangeEvent, useCallback, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Button, MenuItem, Modal, TextField, Typography } from '@mui/material'
+import { AddCircle } from '@mui/icons-material'
+import ModalContainer from '../../common/ModalContainer'
+import { MembershipType, useTrainer } from '../../../hooks/trainer'
+import { TrainerEvent } from '../../../hooks/event'
+import { getGroupMembers } from '../../../hooks/trainer/GroupProvider'
+import LabelValue from '../../common/LabelValue'
 
 enum ChoiceType {
   GROUP_MEMBER = 'GROUP_MEMBER',
@@ -14,56 +14,56 @@ enum ChoiceType {
   OTHER_USER = 'OTHER_USER',
 }
 
-const CHOICE_TYPES = Object.values(ChoiceType) as ChoiceType[];
+const CHOICE_TYPES = Object.values(ChoiceType) as ChoiceType[]
 
-const NewEventMemberPopup = ({ event, eventChanged }: { event: TrainerEvent; eventChanged: (event: TrainerEvent) => void; }) => {
-  const { t } = useTranslation();
-  const { groups, members, addMemberToEvent } = useTrainer();
+const NewEventMemberPopup = ({ event, eventChanged }: { event: TrainerEvent eventChanged: (event: TrainerEvent) => void }) => {
+  const { t } = useTranslation()
+  const { groups, members, addMemberToEvent } = useTrainer()
 
-  const [choiceType, setChoiceType] = useState<ChoiceType>(ChoiceType.GROUP_MEMBER);
+  const [choiceType, setChoiceType] = useState<ChoiceType>(ChoiceType.GROUP_MEMBER)
 
-  const [memberId, setMemberId] = useState<string>('');
+  const [memberId, setMemberId] = useState<string>('')
   
-  const member = useMemo(() => members.find((m) => m.id  === memberId), [memberId, members]);
+  const member = useMemo(() => members.find((m) => m.id  === memberId), [memberId, members])
 
-  const group = useMemo(() => groups.find((g) => g.id === event.groupId)!, [event.groupId, groups]);
+  const group = useMemo(() => groups.find((g) => g.id === event.groupId)!, [event.groupId, groups])
 
-  const groupMembers = useMemo(() => getGroupMembers(members, group), [group, members]);
+  const groupMembers = useMemo(() => getGroupMembers(members, group), [group, members])
 
   const possibleGroupMembers = useMemo(() => groupMembers.filter((m) =>
-    !event.memberIds.includes(m.id)), [event.memberIds, groupMembers]);
+    !event.memberIds.includes(m.id)), [event.memberIds, groupMembers])
 
   const possibleMembers = useMemo(() => members.filter((m) =>
     !event.memberIds.includes(m.id) && !groupMembers.some((gm) => gm.id === m.id)),
-  [event.memberIds, groupMembers, members]);
+  [event.memberIds, groupMembers, members])
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
-  const openModal = useCallback(() => setOpen(true), []);
+  const openModal = useCallback(() => setOpen(true), [])
   const closeModal = useCallback(() => {
-    setMemberId('');
-    setOpen(false);
-  }, []);
+    setMemberId('')
+    setOpen(false)
+  }, [])
 
   const onSelectChoiceType = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setMemberId('');
-    setChoiceType(e.target.value as ChoiceType);
-  }, []);
+    setMemberId('')
+    setChoiceType(e.target.value as ChoiceType)
+  }, [])
 
   const onSelectMember = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setMemberId(e.target.value);
-  }, []);
+    setMemberId(e.target.value)
+  }, [])
 
   const doAddMemberToEvent = useCallback(() => {
     if (!memberId) {
-      return;
+      return
     }
     addMemberToEvent(event, member!.id, member!.name).then((saved) => {
-      setMemberId('');
-      eventChanged(saved);
-      closeModal();
-    });
-  }, [addMemberToEvent, closeModal, event, eventChanged, member, memberId]);
+      setMemberId('')
+      eventChanged(saved)
+      closeModal()
+    })
+  }, [addMemberToEvent, closeModal, event, eventChanged, member, memberId])
 
   const groupMemberChoice = useCallback((memberChoices: MembershipType[]) => (
     <TextField select onChange={onSelectMember} size="small" value={memberId}>
@@ -72,7 +72,7 @@ const NewEventMemberPopup = ({ event, eventChanged }: { event: TrainerEvent; eve
         <MenuItem key={idx} value={pm.id}>{pm.name}</MenuItem>
       ))}
     </TextField>
-  ), [memberId, onSelectMember]);
+  ), [memberId, onSelectMember])
 
   return (
     <>
@@ -108,7 +108,7 @@ const NewEventMemberPopup = ({ event, eventChanged }: { event: TrainerEvent; eve
         </ModalContainer>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default NewEventMemberPopup;
+export default NewEventMemberPopup

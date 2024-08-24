@@ -1,22 +1,22 @@
-import { Link, Outlet, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { Box, Tab, Tabs } from '@mui/material';
+import { Link, Outlet, useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { Box, Tab, Tabs } from '@mui/material'
 
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 
 const StatRouter = () => {
-  const { t } = useTranslation();
-  const location = useLocation();
+  const { t } = useTranslation()
+  const location = useLocation()
 
   const value = useMemo(() => {
     if (location.pathname.endsWith('monthlyStat')) {
-      return 1;
+      return 1
     } else if (location.pathname.endsWith('ticketStat')) {
-      return 2;
+      return 2
     } else {
-      return 0;
+      return 0
     }
-  }, [location]);
+  }, [location])
 
   return (
     <div className="vertical">
@@ -29,7 +29,7 @@ const StatRouter = () => {
       </Box>
       <Outlet />
     </div>
-  );
-};
+  )
+}
 
-export default StatRouter;
+export default StatRouter

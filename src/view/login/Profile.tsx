@@ -1,61 +1,61 @@
-import { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import { Button, MenuItem, Paper, Select, SelectChangeEvent, Typography } from '@mui/material';
-import { useUser } from '../../hooks/user';
-import { useAuth } from '../../hooks/auth';
-import LabelValue from '../common/LabelValue';
-import TrainerBaseData from '../trainer/TrainerBaseData';
-import ProfilePopup from './ProfilePopup';
-import useStorage from '../../hooks/firebase/useStorage';
-import UserAvatar from '../common/UserAvatar';
-import { useDialog } from '../../hooks/dialog';
+import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import { Button, MenuItem, Paper, Select, SelectChangeEvent, Typography } from '@mui/material'
+import { useUser } from '../../hooks/user'
+import { useAuth } from '../../hooks/auth'
+import LabelValue from '../common/LabelValue'
+import TrainerBaseData from '../trainer/TrainerBaseData'
+import ProfilePopup from './ProfilePopup'
+import useStorage from '../../hooks/firebase/useStorage'
+import UserAvatar from '../common/UserAvatar'
+import { useDialog } from '../../hooks/dialog'
 
-const MAX_AVATAR_SIZE = 100000;
+const MAX_AVATAR_SIZE = 100000
 
 const Profile = () => {
-  const { t, i18n } = useTranslation();
-  const { isPasswordEnabled } = useAuth();
-  const { user, saveUser, userChanged } = useUser();
-  const { showDialog } = useDialog();
+  const { t, i18n } = useTranslation()
+  const { isPasswordEnabled } = useAuth()
+  const { user, saveUser, userChanged } = useUser()
+  const { showDialog } = useDialog()
 
-  const { uploadAvatar } = useStorage();
+  const { uploadAvatar } = useStorage()
 
-  const [language, setLanguage] = React.useState(i18n.language);
+  const [language, setLanguage] = React.useState(i18n.language)
 
   const handleChangeLanguage = useCallback((event: SelectChangeEvent<string>) => {
-    const newLanguage = event.target.value;
-    setLanguage(newLanguage);
-    i18n.changeLanguage(newLanguage);
-  }, [i18n]);
+    const newLanguage = event.target.value
+    setLanguage(newLanguage)
+    i18n.changeLanguage(newLanguage)
+  }, [i18n])
 
   const trainerRegistration = useCallback(() => {
     if (!user) {
-      return;
+      return
     }
-    const toSave = { ...user, registeredAsTrainer: true };
-    return saveUser(toSave);
-  }, [saveUser, user]);
+    const toSave = { ...user, registeredAsTrainer: true }
+    return saveUser(toSave)
+  }, [saveUser, user])
 
   const selectFile = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files && e.target.files.length > 0 ? e.target.files![0] : undefined;
+    const selectedFile = e.target.files && e.target.files.length > 0 ? e.target.files![0] : undefined
     if (!selectedFile) {
-      return;
+      return
     }
     if (selectedFile.size >= MAX_AVATAR_SIZE) {
       showDialog({
         title: 'common.warning',
         description: 'warning.maxAvatarSize',
-      });
-      return;
+      })
+      return
     }
     uploadAvatar(selectedFile, user!.id).then(() => {
-      userChanged();
-    });
-  }, [showDialog, uploadAvatar, user, userChanged]);
+      userChanged()
+    })
+  }, [showDialog, uploadAvatar, user, userChanged])
 
   if (!user) {
-    return <div></div>;
+    return <div></div>
   }
 
   return (
@@ -95,7 +95,7 @@ const Profile = () => {
         <ProfilePopup />
         { isPasswordEnabled() && <Link to="changePassword">{t('login.changePassword')}</Link> }
       </div>
-      <div>&nbsp;</div>
+      <div>&nbsp</div>
       <Paper>
         {!user.isTrainer && <div>
           {!user.registeredAsTrainer && <div className="vertical">
@@ -117,7 +117,7 @@ const Profile = () => {
       {user.isTrainer && <div><TrainerBaseData /></div>}
 
     </div>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile

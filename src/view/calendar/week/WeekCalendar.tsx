@@ -17,7 +17,7 @@ const WeekCalendar = <T extends CalendarEvent>({
 }: CalendarProps<T>) => {
   const ref = useRef<HTMLDivElement | null>(null)
 
-  const utils = useUtils();
+  const utils = useUtils()
   const { actualDate, navigation: { nextWeek, prevWeek }, weekCalendarStyle } = useCalendarContext()
   const [sheetResult, setSheetResult] = useState<CalendarPlaceHandlerResult>(DEFAULT_RESULT)
   const [loading, setLoading] = useState<boolean>(false)

@@ -1,4 +1,4 @@
-import { CalendarEvent, EventProvider } from '../../view/calendar/types.ts';
+import { CalendarEvent, EventProvider } from '../../view/calendar/types.ts'
 
 export interface TrainerEvent extends CalendarEvent {
   deletable?: boolean

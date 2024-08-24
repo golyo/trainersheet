@@ -1,64 +1,64 @@
-import { GroupType, TicketSheet, useTrainer } from '../../../hooks/trainer';
-import { Avatar, Button, IconButton, Modal } from '@mui/material';
-import { AddCircle, Edit as EditIcon } from '@mui/icons-material';
-import ModalContainer from '../../common/ModalContainer';
-import { useTranslation } from 'react-i18next';
-import { useCallback, useMemo, useState } from 'react';
-import { TicketNoWarning } from './EventPage';
-import { useDialog } from '../../../hooks/dialog';
-import { TrainerEvent } from '../../../hooks/event';
-import { findOrCreateSheet } from '../../../hooks/trainer';
-import LabelValue from '../../common/LabelValue';
+import { GroupType, TicketSheet, useTrainer } from '../../../hooks/trainer'
+import { Avatar, Button, IconButton, Modal } from '@mui/material'
+import { AddCircle, Edit as EditIcon } from '@mui/icons-material'
+import ModalContainer from '../../common/ModalContainer'
+import { useTranslation } from 'react-i18next'
+import { useCallback, useMemo, useState } from 'react'
+import { TicketNoWarning } from './EventPage'
+import { useDialog } from '../../../hooks/dialog'
+import { TrainerEvent } from '../../../hooks/event'
+import { findOrCreateSheet } from '../../../hooks/trainer'
+import LabelValue from '../../common/LabelValue'
 
 type ActionPopupProps = {
-  memberId: string;
-  groupType: GroupType;
-  event: TrainerEvent;
-  setEvent: (event: TrainerEvent) => void;
-};
+  memberId: string
+  groupType: GroupType
+  event: TrainerEvent
+  setEvent: (event: TrainerEvent) => void
+}
 
 const TrainerActionsPopup = ({ memberId, event, groupType, setEvent } : ActionPopupProps) => {
-  const { t } = useTranslation();
-  const { members, buySeasonTicket, removeMemberFromEvent } = useTrainer();
-  const { showDialog, showConfirmDialog } = useDialog();
+  const { t } = useTranslation()
+  const { members, buySeasonTicket, removeMemberFromEvent } = useTrainer()
+  const { showDialog, showConfirmDialog } = useDialog()
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
-  const isStarted = useCallback(() => event.start.getTime() < Date.now(), [event]);
+  const isStarted = useCallback(() => event.start.getTime() < Date.now(), [event])
 
-  const member = useMemo(() => members.find((m) => m.id === memberId), [memberId, members]);
+  const member = useMemo(() => members.find((m) => m.id === memberId), [memberId, members])
 
   const sheet = useMemo(() => {
     if (!member) {
-      return { } as TicketSheet;
+      return { } as TicketSheet
     }
-    return findOrCreateSheet(member, groupType);
-  }, [groupType, member]);
+    return findOrCreateSheet(member, groupType)
+  }, [groupType, member])
 
-  const openModal = useCallback(() => setOpen(true), []);
-  const closeModal = useCallback(() => setOpen(false), []);
+  const openModal = useCallback(() => setOpen(true), [])
+  const closeModal = useCallback(() => setOpen(false), [])
   
   const buyTicket = useCallback(() => {
     showConfirmDialog({
       description: t('confirm.buySeasonTicket'),
       okCallback: () => {
-        buySeasonTicket(member!.id, event.groupId);
-        closeModal();
+        buySeasonTicket(member!.id, event.groupId)
+        closeModal()
       },
-    });
-  }, [buySeasonTicket, closeModal, event.groupId, member, showConfirmDialog, t]);
+    })
+  }, [buySeasonTicket, closeModal, event.groupId, member, showConfirmDialog, t])
 
   const removeMember = useCallback((ticketBack: boolean) => {
     showConfirmDialog({
       description: t('confirm.removeFromEvent'),
       okCallback: () => {
-        removeMemberFromEvent(event, memberId, ticketBack).then((dbEvent) => setEvent!(dbEvent));
-        closeModal();
+        removeMemberFromEvent(event, memberId, ticketBack).then((dbEvent) => setEvent!(dbEvent))
+        closeModal()
       },
-    });
-  }, [closeModal, event, memberId, removeMemberFromEvent, setEvent, showConfirmDialog, t]);
+    })
+  }, [closeModal, event, memberId, removeMemberFromEvent, setEvent, showConfirmDialog, t])
 
-  const doRemoveMember = useCallback(() => removeMember(true), [removeMember]);
+  const doRemoveMember = useCallback(() => removeMember(true), [removeMember])
 
   const memberMissed = useCallback(() => {
     showDialog({

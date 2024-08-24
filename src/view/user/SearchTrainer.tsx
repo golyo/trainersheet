@@ -1,22 +1,22 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Divider, IconButton, List, ListItem, ListItemAvatar, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { User, useUser } from '../../hooks/user';
-import SearchGroupPopup from './SearchGroupPopup';
-import { Visibility } from '@mui/icons-material';
-import UserAvatar from '../common/UserAvatar';
+import { useCallback, useEffect, useState } from 'react'
+import { Divider, IconButton, List, ListItem, ListItemAvatar, Typography } from '@mui/material'
+import { useTranslation } from 'react-i18next'
+import { User, useUser } from '../../hooks/user'
+import SearchGroupPopup from './SearchGroupPopup'
+import { Visibility } from '@mui/icons-material'
+import UserAvatar from '../common/UserAvatar'
 
 export default function SearchTrainer() {
-  const { t } = useTranslation();
-  const { loadTrainers } = useUser();
-  const [trainers, setTrainers] = useState<User[]>([]);
-  const [trainer, setTrainer] = useState<User>();
+  const { t } = useTranslation()
+  const { loadTrainers } = useUser()
+  const [trainers, setTrainers] = useState<User[]>([])
+  const [trainer, setTrainer] = useState<User>()
 
   useEffect(() => {
-    loadTrainers().then((dbTrainers) => setTrainers(dbTrainers));
-  }, [loadTrainers]);
+    loadTrainers().then((dbTrainers) => setTrainers(dbTrainers))
+  }, [loadTrainers])
 
-  const closeModal = useCallback(() => setTrainer(undefined), []);
+  const closeModal = useCallback(() => setTrainer(undefined), [])
 
   return (
     <div className="vertical">
@@ -50,5 +50,5 @@ export default function SearchTrainer() {
       </List>
       <SearchGroupPopup trainer={trainer} closeModal={closeModal}/>
     </div>
-  );
+  )
 }

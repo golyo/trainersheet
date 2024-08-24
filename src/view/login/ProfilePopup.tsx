@@ -1,35 +1,35 @@
-import { useCallback, useMemo, useState } from 'react';
-import { Controller, FieldValues, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Modal, TextField } from '@mui/material';
-import { User, useUser } from '../../hooks/user';
-import ModalContainer from '../common/ModalContainer';
+import { useCallback, useMemo, useState } from 'react'
+import { Controller, FieldValues, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { Button, Modal, TextField } from '@mui/material'
+import { User, useUser } from '../../hooks/user'
+import ModalContainer from '../common/ModalContainer'
 
 const Profile = () => {
-  const { t } = useTranslation();
-  const { user, saveUser } = useUser();
+  const { t } = useTranslation()
+  const { user, saveUser } = useUser()
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   const schema = useMemo(() => yup.object({
     id: yup.string().required(),
     name: yup.string().required(),
     photoURL: yup.string(),
-  }), []);
+  }), [])
 
   const { handleSubmit, control, formState: { errors } } = useForm<User>({
     resolver: yupResolver(schema),
     defaultValues: user,
-  });
+  })
 
   const doChanges = useCallback((values: FieldValues) => {
-    saveUser(values as User);
-  }, [saveUser]);
+    saveUser(values as User)
+  }, [saveUser])
 
   if (!user) {
-    return <div></div>;
+    return <div></div>
   }
 
   return (
@@ -82,7 +82,7 @@ const Profile = () => {
         </ModalContainer>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile

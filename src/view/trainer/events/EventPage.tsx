@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { TFunction } from 'i18next';
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 import {
   Alert,
   Avatar,
@@ -10,18 +10,18 @@ import {
   ListItem,
   ListItemAvatar,
   Typography,
-} from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { TrainerEvent } from '../../../hooks/event';
-import { useUser } from '../../../hooks/user';
-import { DEFAULT_MEMBER, MembershipType, TicketSheet, useGroup, useTrainer, findOrCreateSheet } from '../../../hooks/trainer';
-import LabelValue from '../../common/LabelValue';
-import TrainerActionsPopup from './TrainerActionsPopup';
+} from '@mui/material'
+import { styled } from '@mui/material/styles'
+import { TrainerEvent } from '../../../hooks/event'
+import { useUser } from '../../../hooks/user'
+import { DEFAULT_MEMBER, MembershipType, TicketSheet, useGroup, useTrainer, findOrCreateSheet } from '../../../hooks/trainer'
+import LabelValue from '../../common/LabelValue'
+import TrainerActionsPopup from './TrainerActionsPopup'
 
 export const TicketAlert = styled(Alert)(() => ({
   padding: '0px 6px',
   marginTop: '3px',
-}));
+}))
 
 export function TicketNoWarning({ sheet, t }: { sheet: TicketSheet, t: TFunction }) {
   return (
@@ -31,39 +31,39 @@ export function TicketNoWarning({ sheet, t }: { sheet: TicketSheet, t: TFunction
         <TicketAlert variant="outlined" severity="error">{t(sheet.remainingEventNo < 0 ? 'event.owesTicket' : 'event.noMoreEvent', { ticketNo: -sheet.remainingEventNo })}</TicketAlert>
       }
     </div>
-  );
+  )
 }
 
 export default function EventPage() {
-  const { eventId } = useParams<{ eventId: string }>();
-  const { t } = useTranslation();
-  const { getDateRangeStr } = useUser();
-  const { members } = useTrainer();
-  const { group, loadEvent } = useGroup();
+  const { eventId } = useParams<{ eventId: string }>()
+  const { t } = useTranslation()
+  const { getDateRangeStr } = useUser()
+  const { members } = useTrainer()
+  const { group, loadEvent } = useGroup()
 
-  const findSheet = useCallback((member: MembershipType) => findOrCreateSheet(member, group!.groupType), [group]);
-  const [event, setEvent] = useState<TrainerEvent | undefined>(undefined);
+  const findSheet = useCallback((member: MembershipType) => findOrCreateSheet(member, group!.groupType), [group])
+  const [event, setEvent] = useState<TrainerEvent | undefined>(undefined)
 
-  const isStarted = useMemo(() => event && Date.now() >= event.start.getTime(), [event]);
+  const isStarted = useMemo(() => event && Date.now() >= event.start.getTime(), [event])
 
   const activeMembers = useMemo(() => {
     if (!event || !group || !members) {
-      return [];
+      return []
     }
-    return event.memberIds.map((mid) => members!.find((gm) => gm.id === mid) || DEFAULT_MEMBER);
-  }, [event, group, members]);
+    return event.memberIds.map((mid) => members!.find((gm) => gm.id === mid) || DEFAULT_MEMBER)
+  }, [event, group, members])
 
   useEffect(() => {
     if (!eventId) {
-      return;
+      return
     }
     loadEvent(eventId).then((dbEvent) => {
-      setEvent(dbEvent);
-    });
-  }, [eventId, loadEvent]);
+      setEvent(dbEvent)
+    })
+  }, [eventId, loadEvent])
 
   if (!event || !group) {
-    return null;
+    return null
   }
 
   return (
@@ -94,5 +94,5 @@ export default function EventPage() {
         ))}
       </List>
     </div>
-  );
+  )
 }

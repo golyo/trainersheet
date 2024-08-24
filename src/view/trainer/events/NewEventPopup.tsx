@@ -1,36 +1,36 @@
-import { useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Controller, FieldValues, useForm } from 'react-hook-form';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Modal, MenuItem, TextField, Button } from '@mui/material';
-import ModalContainer from '../../common/ModalContainer';
-import { useTrainer } from '../../../hooks/trainer';
-import LabelValue from '../../common/LabelValue';
-import { useUtils } from '../../calendar/const.ts';
-import { MuiPickersAdapter } from '@mui/x-date-pickers';
+import { useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Controller, FieldValues, useForm } from 'react-hook-form'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { Modal, MenuItem, TextField, Button } from '@mui/material'
+import ModalContainer from '../../common/ModalContainer'
+import { useTrainer } from '../../../hooks/trainer'
+import LabelValue from '../../common/LabelValue'
+import { useUtils } from '../../calendar/const.ts'
+import { MuiPickersAdapter } from '@mui/x-date-pickers'
 
 interface Props {
-  startDate: Date;
-  resetStartDate: () => void;
+  startDate: Date
+  resetStartDate: () => void
 }
 
 function getTimeStr<T>(date: T, utils: MuiPickersAdapter<Date>) {
-  const hour = utils.getHours(date).toString().padStart(2, '0');
-  const min = utils.getMinutes(date).toString().padStart(2, '0');
-  return hour + ':' + min;
+  const hour = utils.getHours(date).toString().padStart(2, '0')
+  const min = utils.getMinutes(date).toString().padStart(2, '0')
+  return hour + ':' + min
 }
 
 export default function NewEventPopup({ startDate, resetStartDate }: Props) {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
-  const utils = useUtils();
-  const { groups, createEvent } = useTrainer();
+  const utils = useUtils()
+  const { groups, createEvent } = useTrainer()
 
   const schema = useMemo(() => yup.object({
     groupId: yup.string().required(),
     time: yup.string().required(),
-  }), []);
+  }), [])
 
   const { handleSubmit, control, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
@@ -38,12 +38,12 @@ export default function NewEventPopup({ startDate, resetStartDate }: Props) {
       groupId: '',
       time: getTimeStr(startDate, utils),
     },
-  });
+  })
 
   const doChanges = useCallback((values: FieldValues) => {
-    const group = groups.find((g) => g.id === values.groupId)!;
-    createEvent(group, utils.toJsDate(startDate)).then(() => resetStartDate());
-  }, [createEvent, groups, resetStartDate, startDate, utils]);
+    const group = groups.find((g) => g.id === values.groupId)!
+    createEvent(group, utils.toJsDate(startDate)).then(() => resetStartDate())
+  }, [createEvent, groups, resetStartDate, startDate, utils])
 
   return (
     <Modal
@@ -102,5 +102,5 @@ export default function NewEventPopup({ startDate, resetStartDate }: Props) {
         </form>
       </ModalContainer>
     </Modal>
-  );
+  )
 }

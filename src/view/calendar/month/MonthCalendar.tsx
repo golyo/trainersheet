@@ -10,7 +10,7 @@ import CalendarModal from '../CalendarModal'
 import LoadIndicator from '../LoadIndicator'
 import MonthPlaceHandler from './MonthPlaceHandler'
 import './MonthCalendar.css'
-import { useUtils } from '../const.ts';
+import { useUtils } from '../const.ts'
 
 export const getHeaderStyle = (colNo: number, height: string) => ({
   backgroundSize: `${100 / (colNo ?? 1)}%`,
@@ -24,7 +24,7 @@ const MonthCalendar = <T extends CalendarEvent>({
   const ref = useRef<HTMLDivElement | null>(null)
   const [modalDate, setModalDate] = useState<Date>()
 
-  const utils = useUtils();
+  const utils = useUtils()
   const { actualDate, monthCalendarStyle: monthStyle } = useCalendarContext()
   const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([])
   const [loading, setLoading] = useState<boolean>(false)

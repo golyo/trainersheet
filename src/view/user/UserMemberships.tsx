@@ -1,37 +1,37 @@
-import { Avatar, Chip, IconButton, List, ListItem, ListItemAvatar, Typography } from '@mui/material';
-import { TrainerContactMembership, useUser } from '../../hooks/user';
-import UserMembershipDetailPopup from './UserMembershipDetailsPopup';
-import { Event as EventIcon, Visibility } from '@mui/icons-material';
-import { useTranslation } from 'react-i18next';
-import { useCallback, useState } from 'react';
-import { GroupType } from '../../hooks/trainer';
-import { useParams } from 'react-router-dom';
+import { Avatar, Chip, IconButton, List, ListItem, ListItemAvatar, Typography } from '@mui/material'
+import { TrainerContactMembership, useUser } from '../../hooks/user'
+import UserMembershipDetailPopup from './UserMembershipDetailsPopup'
+import { Event as EventIcon, Visibility } from '@mui/icons-material'
+import { useTranslation } from 'react-i18next'
+import { useCallback, useState } from 'react'
+import { GroupType } from '../../hooks/trainer'
+import { useParams } from 'react-router-dom'
 
-const PRIMARY = 'primary' as const;
-const ERROR = 'error' as const;
+const PRIMARY = 'primary' as const
+const ERROR = 'error' as const
 
 const UserMemberships = () => {
-  const { groupMemberships, changeTrainerContactState, leaveGroup, cronConverter } = useUser();
-  const { t } = useTranslation();
-  const { groupId } = useParams<{ groupId: string }>();
+  const { groupMemberships, changeTrainerContactState, leaveGroup, cronConverter } = useUser()
+  const { t } = useTranslation()
+  const { groupId } = useParams<{ groupId: string }>()
 
   const [popupState, setPopupState] = useState<{ groupMembership?: TrainerContactMembership, groupId?: string }>({
     groupMembership: groupMemberships.find((grm) => grm.contactGroups.some((gr) => gr.id === groupId)),
     groupId: groupId,
-  });
+  })
 
   const onSelect = useCallback((groupMembership: TrainerContactMembership, grId: string) => setPopupState({
     groupMembership,
     groupId: grId,
-  }), []);
+  }), [])
 
   const closePopup = useCallback(() => setPopupState({
     groupMembership: undefined,
     groupId: undefined,
-  }), []);
+  }), [])
 
   const getRemainingNo = useCallback((membership: TrainerContactMembership, type: GroupType) =>
-    membership.membership.ticketSheets.find((sheet) => sheet.type === type)?.remainingEventNo || 0, []);
+    membership.membership.ticketSheets.find((sheet) => sheet.type === type)?.remainingEventNo || 0, [])
 
   return (
     <div className="vertical">
@@ -80,7 +80,7 @@ const UserMemberships = () => {
                                  cronConverter={cronConverter}
       />
     </div>
-  );
-};
+  )
+}
 
-export default UserMemberships;
+export default UserMemberships

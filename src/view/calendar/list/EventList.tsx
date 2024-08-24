@@ -1,5 +1,5 @@
 import { FunctionComponent, useMemo } from 'react'
-import { AdapterFormats } from '@mui/x-date-pickers/models/adapters';
+import { AdapterFormats } from '@mui/x-date-pickers/models/adapters'
 
 import { DAY_LENGTH } from '../const.ts'
 import type { EventClick, CalendarEvent } from '../types'

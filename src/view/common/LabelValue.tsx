@@ -3,14 +3,14 @@ import { Box, Theme } from '@mui/material'
 
 export const DisplayRow = styled.div`
   padding: ${props => (props.theme as Theme).spacing(1)}
-  color: black;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  color: black
+  display: flex
+  justify-content: flex-start
+  align-items: center
 `
 
 export const InlineSpan = styled.span`
-  white-space: nowrap;
+  white-space: nowrap
 `
 
 const LabelValue = ({ label, children }: { label: string, children: React.ReactNode }) => {

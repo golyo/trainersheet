@@ -41,7 +41,7 @@ const useTrainerEvents = (user: User, groups: TrainingGroupType[], setState: Dis
       const sheet = findOrCreateSheet(member, groupType)
       sheet.purchasedTicketNo += ticketNoChanges
       sheet.remainingEventNo += eventNoChanges
-      sheet.ticketBuyDate = utils.endOfDay(new Date());
+      sheet.ticketBuyDate = utils.endOfDay(new Date())
       sheet.presenceNo += presenceNoChanges
       return member
     }, true, useMessage).then((member) => {
@@ -66,7 +66,7 @@ const useTrainerEvents = (user: User, groups: TrainingGroupType[], setState: Dis
   const dispatchEventChanged = useCallback((changedEvent: TrainerEvent) => {
     changedEvent.badge = changedEvent.memberIds.length.toString()
     dispatchCalendarEventChangeEvent(changedEvent)
-    return changedEvent;
+    return changedEvent
   }, [])
 
   const createEvent = useCallback((group:TrainingGroupType, startDate: Date) => {

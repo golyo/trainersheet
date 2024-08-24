@@ -14,7 +14,7 @@ const RandomEventProvider: (eventNo: number, maxRange: number) => EventProvider<
     const fromTime = from.getTime()
     const length = to.getTime() - fromTime
     const randomLength = (maxRange ?? 0) > 0 ? Math.min(maxRange, length) : length / 2
-    for (let i = 0; i < eventNo; i++) {
+    for (let i = 0 i < eventNo i++) {
       const actLength = getRandomNumber(randomLength)
       const actStart = getRandomNumber(length)
       events.push({

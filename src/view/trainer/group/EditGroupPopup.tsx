@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   useForm,
   useFieldArray,
   Controller,
   FieldValues,
-} from 'react-hook-form';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
+} from 'react-hook-form'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 import {
   Avatar,
   Button,
@@ -21,98 +21,98 @@ import {
   Select,
   TextField,
   Typography,
-} from '@mui/material';
-import { Event as EventIcon, ExpandMore } from '@mui/icons-material';
-import { GroupType, TrainingGroupUIType, useTrainer } from '../../../hooks/trainer';
-import { Accordion, AccordionDetails, AccordionSummary } from '../../common/ZhAccordion';
-import CronWeekPicker from '../../common/CronWeekPicker';
-import ModalContainer from '../../common/ModalContainer';
-import * as React from 'react';
-import { useDialog } from '../../../hooks/dialog';
-import { EVENT_COLORS } from '../../calendar/const.ts';
+} from '@mui/material'
+import { Event as EventIcon, ExpandMore } from '@mui/icons-material'
+import { GroupType, TrainingGroupUIType, useTrainer } from '../../../hooks/trainer'
+import { Accordion, AccordionDetails, AccordionSummary } from '../../common/ZhAccordion'
+import CronWeekPicker from '../../common/CronWeekPicker'
+import ModalContainer from '../../common/ModalContainer'
+import { useDialog } from '../../../hooks/dialog'
+import { EVENT_COLORS } from '../../calendar/const.ts'
 
 interface ModalTitleProps {
-  trainingGroup: TrainingGroupUIType;
-  isOpen: boolean;
-  closePopup: () => void;
-  saveGroup: (group: TrainingGroupUIType) => Promise<void>;
+  trainingGroup: TrainingGroupUIType
+  isOpen: boolean
+  closePopup: () => void
+  saveGroup: (group: TrainingGroupUIType) => Promise<void>
 }
-
 const EditGroupPopup = ({ trainingGroup, isOpen, closePopup, saveGroup } : ModalTitleProps) => {
-  const { t } = useTranslation();
-  const { showDialog } = useDialog();
-  const { groups } = useTrainer();
-  const [showPublic, setShowPublic] = useState<boolean>(true);
+  const { t } = useTranslation()
+  const { showDialog } = useDialog()
+  const { groups } = useTrainer()
+  const [showPublic, setShowPublic] = useState<boolean>(true)
 
-  const toggleAccordion = useCallback(() => setShowPublic((prev) => !prev), []);
+  const toggleAccordion = useCallback(() => setShowPublic((prev) => !prev), [])
   const schema = useMemo(() => yup.object({
+    id: yup.string().required(),
     name: yup.string().required(),
-    groupType: yup.string().required(),
     color: yup.string().required(),
+    attachedGroups: yup.array().of(yup.string().required()).required(),
+    groupType: yup.mixed<GroupType>().oneOf(Object.values(GroupType)).required(),
     inviteOnly: yup.boolean().required(),
     duration: yup.number().integer().min(1).max(24 * 60),
     cancellationDeadline: yup.number().integer().min(0).max(120),
     ticketLength: yup.number().integer().min(1).max(100),
     ticketValidity: yup.number(),
     maxMember: yup.number().integer().min(1).max(100),
-    attachedGroups: yup.array().of(yup.string()),
+    showMembers: yup.boolean().required(),
     crons: yup.array().of(
       yup.object().shape({
-        days: yup.array().of(yup.string()).min(1, t('error.required')!),
+        days: yup.array().of(yup.string().required()).min(1, t('error.required') as string).required(),
         time: yup.string().required(),
-      }),
-    ),
-  }), [t]);
+      }).required(),
+    ).required(),
+  }), [t])
 
-  const { handleSubmit, control, setValue, reset, trigger, formState: { errors }, watch } = useForm<TrainingGroupUIType>({ resolver: yupResolver(schema) });
+  const { handleSubmit, control, setValue, reset, trigger, formState: { errors }, watch } = useForm<TrainingGroupUIType>({ resolver: yupResolver(schema) })
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'crons',
-  });
+  })
 
-  const groupColor = watch('color');
-  const attachedGroups = watch('attachedGroups');
+  const groupColor = watch('color')
+  const attachedGroups = watch('attachedGroups')
 
-  const attachableGroups = useMemo(() => groups.filter((gr) => gr.id != trainingGroup.id ), [groups, trainingGroup.id]);
+  const attachableGroups = useMemo(() => groups.filter((gr) => gr.id != trainingGroup.id ), [groups, trainingGroup.id])
 
   const months = useMemo(() => {
-    return Array.from({ length: 12 }, (_, i) => (i + 1));
-  }, []);
+    return Array.from({ length: 12 }, (_, i) => (i + 1))
+  }, [])
 
   useEffect(() => {
-    reset(trainingGroup);
-  }, [reset, trainingGroup]);
+    reset(trainingGroup)
+  }, [reset, trainingGroup])
 
   const modifyData = useCallback((modifiedGroup: FieldValues) => {
     const toSave = {
       ...trainingGroup,
       ...modifiedGroup,
-    };
-    saveGroup(toSave);
-    closePopup();
-  }, [closePopup, saveGroup, trainingGroup]);
+    }
+    saveGroup(toSave)
+    closePopup()
+  }, [closePopup, saveGroup, trainingGroup])
 
   const onGroupTypeChanged = useCallback(() => {
     if (attachedGroups.length > 0) {
       showDialog({
         title: 'common.warning',
         description: 'warning.groupTypeChangeIfNotAttached',
-      });
+      })
     }
-    return attachedGroups.length === 0;
-  }, [attachedGroups, showDialog]);
+    return attachedGroups.length === 0
+  }, [attachedGroups, showDialog])
 
   if (!trainingGroup) {
-    return null;
+    return null
   }
 
   return (
     <Modal
-      open={!!isOpen}
+      open={isOpen}
       onClose={closePopup}
     >
-      <ModalContainer variant="big" open={!!isOpen} title={(
+      <ModalContainer variant="big" open={isOpen} title={(
         <>
           <Avatar sx={{ bgcolor: groupColor }}>
             <EventIcon></EventIcon>
@@ -155,7 +155,7 @@ const EditGroupPopup = ({ trainingGroup, isOpen, closePopup, saveGroup } : Modal
                       variant="outlined"
                       onChange={(e) => {
                         if (onGroupTypeChanged()) {
-                          field.onChange(e);
+                          field.onChange(e)
                         }
                       }}
                     >
@@ -231,7 +231,7 @@ const EditGroupPopup = ({ trainingGroup, isOpen, closePopup, saveGroup } : Modal
                     </TextField>
                   )}
                 />
-                {fields.map((item, index) => (
+                {fields.map((_, index) => (
                   <div key={index}>
                     <CronWeekPicker
                       control={control}
@@ -359,8 +359,8 @@ const EditGroupPopup = ({ trainingGroup, isOpen, closePopup, saveGroup } : Modal
                         label={t('trainingGroup.attachedGroups')}
                         size="small"
                       >
-                        {attachableGroups.map((agroup, idx) =>
-                          (<MenuItem key={idx} value={agroup.id}>{agroup.name}</MenuItem>),
+                        {attachableGroups.map((group, idx) =>
+                          (<MenuItem key={idx} value={group.id}>{group.name}</MenuItem>),
                         )}
                       </Select>
                     </FormControl>
@@ -381,7 +381,7 @@ const EditGroupPopup = ({ trainingGroup, isOpen, closePopup, saveGroup } : Modal
       </ModalContainer>
     </Modal>
 
-  );
-};
+  )
+}
 
-export default EditGroupPopup;
+export default EditGroupPopup

@@ -1,6 +1,6 @@
 import { UiCronType } from './UserContext'
-import { MuiPickersAdapter } from '@mui/x-date-pickers';
-import { getWeekdays } from '../../view/calendar/const.ts';
+import { MuiPickersAdapter } from '@mui/x-date-pickers'
+import { getWeekdays } from '../../view/calendar/const.ts'
 
 const daysToWeekValue = (days: string[], weekDays: string[]) => days.map((dayIdx) => weekDays[parseInt(dayIdx)])
 const daysToWeekIdx = (days: string[], weekDays: string[]) => days.map((dayName) => weekDays.indexOf(dayName))

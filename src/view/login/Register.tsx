@@ -1,44 +1,44 @@
-import { useCallback } from 'react';
-import { Controller, FieldValues, useForm } from 'react-hook-form';
-import { Navigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { Button, TextField } from '@mui/material';
-import { AuthState, useAuth } from '../../hooks/auth';
-import BackButton from '../common/BackButton';
+import { useCallback } from 'react'
+import { Controller, FieldValues, useForm } from 'react-hook-form'
+import { Navigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { Button, TextField } from '@mui/material'
+import { AuthState, useAuth } from '../../hooks/auth'
+import BackButton from '../common/BackButton'
 
 const Register = () => {
-  const { handleSubmit, control, setError, formState: { errors } } = useForm();
-  const { t } = useTranslation();
-  const { register, authState } = useAuth();
+  const { handleSubmit, control, setError, formState: { errors } } = useForm()
+  const { t } = useTranslation()
+  const { register, authState } = useAuth()
 
   const doRegister = useCallback((values: FieldValues) => {
-    const { email, password, passwordCheck, displayName } = values;
+    const { email, password, passwordCheck, displayName } = values
     if (password !== passwordCheck) {
       setError('passwordCheck', {
         type: 'manual',
         message: t('login.error.passwordCheck')!,
-      });
-      return;
+      })
+      return
     }
     register(email, password, displayName).then(() => {
-      // setErrors({});
+      // setErrors({})
     }).catch((err: unknown) => {
       if (err.code.endsWith('password')) {
         setError('password', {
           type: 'manual',
           message: t('login.error.' + err.code)!,
-        });
+        })
       } else {
         setError('email', {
           type: 'manual',
           message: t('login.error.' + err.code)!,
-        });
+        })
       }
-    });
-  }, [register, setError, t]);
+    })
+  }, [register, setError, t])
 
   if (authState === AuthState.AUTHORIZED) {
-    return <Navigate to="/verification"></Navigate>;
+    return <Navigate to="/verification"></Navigate>
   }
 
   return (
@@ -113,7 +113,7 @@ const Register = () => {
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register

@@ -1,14 +1,15 @@
 import { useCallback, useMemo } from 'react'
 import { get } from 'lodash-es'
-import { Control, Controller, FieldValues } from 'react-hook-form'
+import { Control, Controller, UseFormSetValue, UseFormTrigger, FieldPath } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import {
-  Autocomplete, AutocompleteValue, Box, IconButton,
+  Autocomplete, Box, IconButton,
   TextField,
 } from '@mui/material'
 import { AddCircle, Delete } from '@mui/icons-material'
-import { getWeekdays, useUtils } from '../calendar/const.ts';
+import { getWeekdays, useUtils } from '../calendar/const.ts'
+import { TrainingGroupUIType } from '../../hooks/trainer';
 
 const resolve = (path: string, obj: object) => {
   return get(obj, path, undefined) as unknown
@@ -20,12 +21,13 @@ interface CronError {
     message: string
   }
 }
+
 interface CronWeekPickerProps {
-  control: Control<FieldValues>
-  setValue: (name: string, values: AutocompleteValue<unknown, false, false, false>) => void
+  control: Control<TrainingGroupUIType>
+  setValue: UseFormSetValue<TrainingGroupUIType>
   errors: object
-  trigger: (values: string[]) => Promise<boolean>
-  name: string
+  trigger: UseFormTrigger<TrainingGroupUIType>
+  name: FieldPath<TrainingGroupUIType>
   onDelete: (() => void) | undefined
   onAdd: (() => void) | undefined
 }
@@ -36,22 +38,22 @@ const CronWeekPicker = ({ control, setValue, trigger, errors, name, onDelete, on
 
   const weekDays = useMemo(() => getWeekdays(utils), [utils])
 
-  const autoName = `${name}.days`
+  const autoName = `${name}.days` as FieldPath<TrainingGroupUIType>
 
   const cronErrors = resolve(name, errors) as CronError
 
   const checkCanAdd = useCallback(async () => {
-    const canAdd = await trigger([`${name}.days`, `${name}.time`])
+    const canAdd = await trigger([autoName, `${name}.time` as FieldPath<TrainingGroupUIType>])
     if (canAdd) {
       onAdd!()
     }
-  }, [name, onAdd, trigger])
+  }, [autoName, name, onAdd, trigger])
 
   return (
     <Box sx={{ display: 'flex', gap: 1 }}>
       <Controller
         control={control}
-        name={autoName as never}
+        name={autoName}
         render={({ field }) =>
           <Autocomplete
             {...field}
@@ -59,7 +61,7 @@ const CronWeekPicker = ({ control, setValue, trigger, errors, name, onDelete, on
             size="small"
             id="tags-standard"
             sx={{ width: '100%' }}
-            value={field.value || []}
+            value={(field.value as string[]) || []}
             options={weekDays}
             onChange={(_, values) => setValue(autoName, values)}
             renderInput={(params) => (
