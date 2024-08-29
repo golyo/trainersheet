@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from 'react'
+import { useContext, useEffect, useMemo, useState, ReactNode } from 'react'
 import { getAuth } from 'firebase/auth'
 import { initializeApp } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
@@ -18,7 +18,7 @@ const firebaseConfig = {
 }
 
 
-const FirebaseProvider = ({ children }: { children: React.ReactNode }) => {
+const FirebaseProvider = ({ children }: { children: ReactNode }) => {
   const [services, setServices] = useState<FirebaseServices>({} as FirebaseServices)
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useCallback, useMemo, useState, MouseEvent } from 'react'
+import { useCallback, useMemo, useState, MouseEvent, ReactNode } from 'react'
 import {
   Link, Route, Routes,
 } from 'react-router-dom'
@@ -47,7 +47,7 @@ import { useTheme } from '@emotion/react'
 
 export type MenuItemType = {
   label: string
-  icon?: React.ReactNode
+  icon?: ReactNode
   isVisible: (user?: User) => boolean
   path: string
 }

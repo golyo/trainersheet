@@ -91,7 +91,7 @@ const createMembership = (trainer: TrainerContact, membership: MembershipType, t
 // const HACK_USER = 'horvathmarta369@gmail.com'
 const HACK_USER = undefined
 
-const UserProvider = ({ children }: { children: Iterable<ReactNode> }) => {
+const UserProvider = ({ children }: { children: ReactNode }) => {
   const { firestore } = useFirebase()
   const userSrv = useFirestore<UserBase>('users')
   const { authUser } = useAuth()

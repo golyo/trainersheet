@@ -35,7 +35,7 @@ const MonthCalendar = <T extends CalendarEvent>({
     if (event.badge) {
       setModalDate(start)
     }
-  }, [utils])
+  }, [])
 
   const closeModal = useCallback(() => {
     setModalDate(undefined)
@@ -55,7 +55,7 @@ const MonthCalendar = <T extends CalendarEvent>({
       backgroundImage: 'linear-gradient(90deg, transparent 0px, transparent calc(100% - 1px), var(--grid-color) calc(100%))',
       backgroundSize: `${100 / calendarHandler.getColNo()}%`
     }
-  }, [calendarHandler, calendarEvents])
+  }, [calendarHandler])
 
   const modalState = useMemo(() => ({
     visible: !!modalDate,

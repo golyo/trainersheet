@@ -96,11 +96,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return getRedirectResult(auth)
       })
       .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result!)!
-
-        // This gives you a Google Access Token.
-        // You can use it to access the Google API.
-        return credential
+        return GoogleAuthProvider.credentialFromResult(result!)!
       }).catch((error) => {
         console.error('ERROR WHILE LOGIN', error.code, error.message)
         // Handle Errors here.

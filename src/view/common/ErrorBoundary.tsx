@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
 
 interface Props {
-  children: Iterable<ReactNode>
+  children: ReactNode
   t: TFunction
 }
 

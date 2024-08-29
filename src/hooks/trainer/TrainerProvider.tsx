@@ -16,7 +16,7 @@ const setTrainerDeafults = (trainerData: TrainerDataType) => {
   trainerData.address = trainerData.address || ''
 }
 
-const TrainerProvider = ({ children }: { children: Iterable<ReactNode> }) => {
+const TrainerProvider = ({ children }: { children: ReactNode }) => {
   const { firestore } = useFirebase()
   const { user, cronConverter } = useUser()
 

@@ -208,7 +208,7 @@ export const useFirestore = <T extends DataWithId>(path: string, dateProperties?
           })
         })
       })
-    }, [getDocRef, hiddeError, hideBackdrop, path, showBackdrop])
+    }, [getDocRef, hideBackdrop, path, showBackdrop])
 
   const remove = useCallback((id: string, useMessage = true) => {
     showBackdrop()

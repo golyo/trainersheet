@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useCallback, useContext, useMemo, useState } from 'react'
+import { useCallback, useContext, useMemo, useState, ReactNode } from 'react'
 import DialogContext, { BackdropType, CheckIfConfirmDialogType, ConfirmDialogType, DialogType } from './DialogContext'
 import ConfirmDialog from '../../view/common/ConfirmDialog'
 import { Alert, Backdrop, CircularProgress } from '@mui/material'
@@ -18,13 +18,13 @@ const pushMessage = (messages: string[], message?: string | false) => {
 
 const styles = (theme: ThemeOptions) => ({
   backdrop: css`
-      color: #fff
-      flex-direction: column
-      z-index: ${theme.zIndex!.modal! + 1}
+      color: #fff;
+      flex-direction: column;
+      z-index: ${theme.zIndex!.modal! + 1};
     `
 })
 
-const DialogProvider = ({ children } : { children: React.ReactNode }) => {
+const DialogProvider = ({ children } : { children: ReactNode }) => {
   const [open, setOpen] = useState(false)
   const { t } = useTranslation()
   const theme = useTheme()
