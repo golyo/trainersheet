@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Alert,
@@ -103,7 +104,7 @@ const NextEvents = () => {
   const remainingEventNos: number[] = useMemo(() => events.map((event) => getRemainingEventNo(event)),
     [events, getRemainingEventNo])
 
-  const handleChange = useCallback((event: TrainerEvent) => (e: unknown) => {
+  const handleChange = useCallback((event: TrainerEvent) => (e: ChangeEvent<HTMLInputElement>) => {
     const isAdd = e.target.checked
     const group = findGroupToEvent(event)
     const membership = activeMemberships.find((gm) => gm.trainer.trainerId === event.trainerId)!

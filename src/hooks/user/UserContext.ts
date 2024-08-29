@@ -29,14 +29,18 @@ export interface TrainerContactMembership extends TrainerGroups {
   trainerGroups: TrainingGroupType[];
 }
 
-export interface User {
+export interface UserBase {
   id: string;
   name: string;
-  registeredAsTrainer: boolean;
-  isTrainer: boolean;
-  location: string;
+  photoUrl?: string;
   registrationDate?: number;
-  memberships: TrainerContact[];
+}
+
+export interface User extends UserBase {
+  registeredAsTrainer?: boolean;
+  isTrainer?: boolean;
+  location?: string;
+  memberships?: TrainerContact[];
 }
 
 export interface UserContextType {
@@ -49,7 +53,7 @@ export interface UserContextType {
   loadTrainers: () => Promise<User[]>;
   leaveGroup: (membership: TrainerContactMembership, groupId: string) => void;
   membershipChanged: () => void;
-  saveUser: (user: User) => Promise<void>;
+  saveUser: (user: UserBase) => Promise<void>;
   user?: User;
   userEventProvider: UserEventProvider;
   getAvatarUrl: (avatarName: string) => Promise<string>;

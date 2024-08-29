@@ -11,13 +11,13 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import MemberEventStat from './MemberEventStat'
 import { useUtils } from '../../calendar/const.ts'
 
-export default function MonthlyMemberStat<T>() {
+export default function MonthlyMemberStat() {
   const utils = useUtils()
   const { t } = useTranslation()
 
   const thisMonth = useMemo(() => utils.startOfMonth(new Date()), [utils])
 
-  const [monthStart, setMonthStart] = useState<T>(thisMonth)
+  const [monthStart, setMonthStart] = useState<Date>(thisMonth)
 
   const monthTitle = useMemo(() => utils.format(monthStart, 'month') + ' ' + utils.format(monthStart, 'year'), [monthStart, utils])
 

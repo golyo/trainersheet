@@ -234,7 +234,7 @@ const WeekPlaceHandler = ({ utils, hideWeekends, maxEventNo, minEventHeight = 0,
     }
   })
   const appendHourEvents = (events: SheetEvent[], onEventClick: EventClick) => {
-    for (let i = 0 i < HOUR_NO i++) {
+    for (let i = 0; i < HOUR_NO; i++) {
       const event = {
         event: {
           id: createGeneratedId(`hour-${i}`),
@@ -263,7 +263,7 @@ const WeekPlaceHandler = ({ utils, hideWeekends, maxEventNo, minEventHeight = 0,
     events.push(getGmtEvent())
     const weekDays = getWeekdays(utils)
     const shift = hideWeekends && isFirstSunday ? 1 : 0
-    for (let i = 0 i < weekDayNo i++) {
+    for (let i = 0; i < weekDayNo; i++) {
       const actDay = utils.addDays(firstWeekDay, i)
       const event = {
         event: {

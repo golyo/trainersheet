@@ -53,7 +53,7 @@ export const getGroupMembers = (members: MembershipType[], group: TrainingGroupB
     (group.attachedGroups && group.attachedGroups.some((attachedId) => member.groups.includes(attachedId))))
 }
 
-const GroupProvider = ({ groupId, children }: { groupId: string, children: Iterable<ReactNode> }) => {
+const GroupProvider = ({ groupId, children }: { groupId: string, children: ReactNode }) => {
   const { t } = useTranslation()
   const { user, cronConverter } = useUser()
   const { groups, members, membershipChanged, sendEmail } = useTrainer()
@@ -79,9 +79,9 @@ const GroupProvider = ({ groupId, children }: { groupId: string, children: Itera
   const setUserMemberships = useCallback((userId: string, trainerContact: TrainerContact) => {
     return userSrv.get(userId).then((dbUser) => {
       const addUser = dbUser
-      const dbGroupIdx = addUser.memberships.findIndex((dbTrainerContact: TrainerContact) => dbTrainerContact.trainerId === user!.id)
+      const dbGroupIdx = addUser.memberships!.findIndex((dbTrainerContact: TrainerContact) => dbTrainerContact.trainerId === user!.id)
       if (dbGroupIdx < 0) {
-        addUser.memberships.push(trainerContact)
+        addUser.memberships!.push(trainerContact)
         userSrv.save(addUser, true, false)
       }
     })
@@ -92,10 +92,10 @@ const GroupProvider = ({ groupId, children }: { groupId: string, children: Itera
       if (!dbUser) {
         return
       }
-      const dbGroupIdx = dbUser.memberships.findIndex((dbTrainerContact: TrainerContact) => dbTrainerContact.trainerId === user!.id)
+      const dbGroupIdx = dbUser.memberships!.findIndex((dbTrainerContact: TrainerContact) => dbTrainerContact.trainerId === user!.id)
       if (dbGroupIdx >= 0) {
-        dbUser.memberships.splice(dbGroupIdx, 1)
-        if (dbUser.memberships.length === 0 && !dbUser.registrationDate) {
+        dbUser.memberships!.splice(dbGroupIdx, 1)
+        if (dbUser.memberships!.length === 0 && !dbUser.registrationDate) {
           userSrv.remove(dbUser.id, false)
         } else {
           userSrv.save(dbUser, true, false)

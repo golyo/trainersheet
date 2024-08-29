@@ -14,12 +14,12 @@ const createSheet = (type: GroupType) => ({
 } as TicketSheet)
 
 export const findOrCreateSheet = (memberShip: MembershipType, type: GroupType) => {
-  const sheet = memberShip.ticketSheets.find((sh) => sh.type === type)
+  const sheet = memberShip.ticketSheets!.find((sh) => sh.type === type)
   if (sheet) {
     return sheet
   }
   const newSheet = createSheet(type)
-  memberShip.ticketSheets.push(newSheet)
+  memberShip.ticketSheets!.push(newSheet)
   return newSheet
 }
 
@@ -60,7 +60,7 @@ const useTrainerEvents = (user: User, groups: TrainingGroupType[], setState: Dis
 
   const buySeasonTicket = useCallback((memberId: string, groupId: string) => {
     const group = findGroup(groupId)
-    return changeMembershipValues(memberId, group.groupType, 1, group.ticketLength, 0, true)
+    return changeMembershipValues(memberId, group.groupType, 1, group.ticketLength || 0, 0, true)
   }, [changeMembershipValues, findGroup])
 
   const dispatchEventChanged = useCallback((changedEvent: TrainerEvent) => {

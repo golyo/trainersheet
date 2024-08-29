@@ -15,7 +15,7 @@ interface Props {
   resetStartDate: () => void
 }
 
-function getTimeStr<T>(date: T, utils: MuiPickersAdapter<Date>) {
+function getTimeStr(date: Date, utils: MuiPickersAdapter<Date>) {
   const hour = utils.getHours(date).toString().padStart(2, '0')
   const min = utils.getMinutes(date).toString().padStart(2, '0')
   return hour + ':' + min

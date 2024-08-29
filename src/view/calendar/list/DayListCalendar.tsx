@@ -7,9 +7,8 @@ import EventList from './EventList'
 import LoadIndicator from '../LoadIndicator'
 
 import './DayListCalendar.css'
-import { TrainerEvent } from '../../../hooks/event'
 
-interface DayListCalendarProps extends CalendarProps<TrainerEvent> {
+interface DayListCalendarProps<T extends CalendarEvent> extends CalendarProps<T> {
   dayCacheRange?: number
 }
 
@@ -18,7 +17,7 @@ interface EventCache {
   events: CalendarEvent[]
 }
 
-const DayListCalendar = ({ eventProvider, dayCacheRange = 10, onEventClick }: DayListCalendarProps) => {
+const DayListCalendar = <T extends CalendarEvent>({ eventProvider, dayCacheRange = 10, onEventClick }: DayListCalendarProps<T>) => {
   const { actualDate } = useCalendarContext()
   const utils = useUtils()
   const [eventCache, setEventCache] = useState<EventCache>()

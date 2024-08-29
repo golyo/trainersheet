@@ -22,7 +22,7 @@ const Login = () => {
     const { email, password } = values
     login(email, password).then(() => {
       navigate('/')
-    }).catch((err: unknown) => {
+    }).catch((err) => {
       setError('email', {
         type: 'manual',
         message: t(`login.error.${err.code}`)!,

@@ -10,7 +10,7 @@ import {
   useFirestore,
 } from '../firestore/firestore'
 import { useAuth } from '../auth/AuthProvider'
-import UserContext, { User, TrainerContact, TrainerContactMembership, UserContextType } from './UserContext'
+import UserContext, { User, TrainerContact, TrainerContactMembership, UserContextType, UserBase } from './UserContext'
 import { useFirebase } from '../firebase'
 import {
   MembershipType,
@@ -93,7 +93,7 @@ const HACK_USER = undefined
 
 const UserProvider = ({ children }: { children: Iterable<ReactNode> }) => {
   const { firestore } = useFirebase()
-  const userSrv = useFirestore<User>('users')
+  const userSrv = useFirestore<UserBase>('users')
   const { authUser } = useAuth()
   const { uploadAvatar, getAvatarUrl } = useStorage()
   const utils = useUtils()
@@ -148,9 +148,9 @@ const UserProvider = ({ children }: { children: Iterable<ReactNode> }) => {
   }, [firestore, user, activeMemberships])
 
   const deleteTrainerContactState = useCallback(async (membership: TrainerContactMembership) => {
-    const idx = user!.memberships.findIndex((m) => m.trainerId === membership.trainer.trainerId)
+    const idx = user!.memberships?.findIndex((m) => m.trainerId === membership.trainer.trainerId) || -1;
     if (idx >= 0) {
-      user!.memberships.splice(idx, 1)
+      user!.memberships?.splice(idx, 1)
     }
     await userSrv.save(user!)
     changeUser(user!)
@@ -211,8 +211,8 @@ const UserProvider = ({ children }: { children: Iterable<ReactNode> }) => {
   }, [firestore, user])
 
   const addGroupMembership = useCallback((trainer: User, group: TrainingGroupUIType) => {
-    if (!user!.memberships.some((m) => m.trainerId === trainer.id)) {
-      user!.memberships.push({
+    if (!user!.memberships?.some((m) => m.trainerId === trainer.id)) {
+      user!.memberships?.push({
         trainerId: trainer.id,
         trainerName: trainer.name,
       })
@@ -222,7 +222,7 @@ const UserProvider = ({ children }: { children: Iterable<ReactNode> }) => {
   }, [firestore, loadGroupMemberships, saveUser, user])
 
   const loadUser = useCallback((pAuthUser: AuthUser) => {
-    userSrv.get(HACK_USER || pAuthUser!.email!).then((dbUser: User) => {
+    userSrv.get(HACK_USER || pAuthUser!.email!).then((dbUser) => {
       if (dbUser) {
         if (!dbUser.registrationDate) {
           // FIRST LOGIN

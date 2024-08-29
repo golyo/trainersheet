@@ -1,24 +1,17 @@
 import { useCallback, useMemo, useState } from 'react'
-import { Controller, useForm, Resolver } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next'
-import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, MenuItem, Modal, Select, SelectChangeEvent, TextField, Typography } from '@mui/material'
 import { AddCircle } from '@mui/icons-material'
-import * as yup from 'yup'
 import ModalContainer from '../../common/ModalContainer'
 import {
-  DEFAULT_MEMBER, MembershipType,
+  DEFAULT_MEMBER, MEMBERSHIP_TYPE_SCHEMA,
+  MembershipType,
   MemberState,
   useGroup,
   useTrainer,
 } from '../../../hooks/trainer'
-
-const schema = yup.object({
-  id: yup.string().email().required(),
-  name: yup.string().required(),
-})
-
-const membershipTypeResolver: Resolver<MembershipType> = yupResolver(schema)
 
 const NewMemberPopup = () => {
   const { t } = useTranslation()
@@ -33,7 +26,7 @@ const NewMemberPopup = () => {
 
   const [open, setOpen] = useState(false)
   const { handleSubmit, control, reset, formState: { errors } } = useForm<MembershipType>({
-    resolver: membershipTypeResolver,
+    resolver: yupResolver(MEMBERSHIP_TYPE_SCHEMA),
     defaultValues: { ...DEFAULT_MEMBER },
   })
 

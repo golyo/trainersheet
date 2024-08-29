@@ -4,7 +4,7 @@ import {
   useForm,
   useFieldArray,
   Controller,
-  FieldValues,
+  FieldValues
 } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -51,7 +51,7 @@ const EditGroupPopup = ({ trainingGroup, isOpen, closePopup, saveGroup } : Modal
     groupType: yup.mixed<GroupType>().oneOf(Object.values(GroupType)).required(),
     inviteOnly: yup.boolean().required(),
     duration: yup.number().integer().min(1).max(24 * 60),
-    cancellationDeadline: yup.number().integer().min(0).max(120),
+    cancellationDeadline: yup.number().integer().min(0).max(120).required(),
     ticketLength: yup.number().integer().min(1).max(100),
     ticketValidity: yup.number(),
     maxMember: yup.number().integer().min(1).max(100),

@@ -16,7 +16,7 @@ enum ChoiceType {
 
 const CHOICE_TYPES = Object.values(ChoiceType) as ChoiceType[]
 
-const NewEventMemberPopup = ({ event, eventChanged }: { event: TrainerEvent eventChanged: (event: TrainerEvent) => void }) => {
+const NewEventMemberPopup = ({ event, eventChanged }: { event: TrainerEvent; eventChanged: (event: TrainerEvent) => void }) => {
   const { t } = useTranslation()
   const { groups, members, addMemberToEvent } = useTrainer()
 

@@ -24,7 +24,7 @@ const PasswordChange = () => {
     updatePassword(oldPassword, newPassword).then(() => {
       // TODO clear error messages ?
       navigate('/registrationSuccess?action=changePassword')
-    }).catch((err: unknown) => {
+    }).catch((err) => {
       if (err.code.endsWith('wrong-password')) {
         setError('oldPassword', {
           type: 'manual',
@@ -57,7 +57,6 @@ const PasswordChange = () => {
         <Controller
           name={'oldPassword' as never}
           control={control}
-          defaultValue=""
           render={({ field: { onChange, value } }) => (
             <TextField
               onChange={onChange}
@@ -73,7 +72,6 @@ const PasswordChange = () => {
         <Controller
           name={'newPassword' as never}
           control={control}
-          defaultValue=""
           render={({ field: { onChange, value } }) => (
             <TextField
               onChange={onChange}
@@ -89,7 +87,6 @@ const PasswordChange = () => {
         <Controller
           name={'passwordCheck' as never}
           control={control}
-          defaultValue=""
           render={({ field: { onChange, value } }) => (
             <TextField
               onChange={onChange}

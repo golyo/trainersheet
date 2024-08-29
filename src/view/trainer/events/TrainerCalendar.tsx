@@ -6,8 +6,8 @@ import { TrainerEvent } from '../../../hooks/event'
 import { GroupType, useTrainer } from '../../../hooks/trainer'
 import TrainerEventPopup from './TrainerEventPopup'
 import NewEventPopup from './NewEventPopup'
-import { CalendarEvent } from '../../calendar/types.ts'
 import WeekCalendar from '../../calendar/week/WeekCalendar.tsx'
+import { BaseEvent } from '../../calendar/types.ts';
 
 export default function TrainerCalendar() {
   const { t } = useTranslation()
@@ -15,7 +15,7 @@ export default function TrainerCalendar() {
   const [selectedEvent, setSelectedEvent] = useState<TrainerEvent | null>(null)
   const [newEventStartDate, setNewEventStartDate] = useState<Date | null>(null)
 
-  const eventClick = useCallback((event: CalendarEvent) => {
+  const eventClick = useCallback((event: BaseEvent) => {
     setSelectedEvent(event as TrainerEvent)
     // navigate(`/group/${event.groupId}/event/${event.id}`)
   }, [])

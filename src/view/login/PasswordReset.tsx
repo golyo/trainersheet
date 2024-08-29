@@ -16,7 +16,7 @@ const PasswordReset = () => {
     const { email } = values
     startPasswordReset(email).then(() => {
       // setErrors({})
-    }).catch((err: unknown) => {
+    }).catch((err) => {
       setError('email', {
         type: 'manual',
         message: t(`login.error.${err.code}`)!,
@@ -37,7 +37,6 @@ const PasswordReset = () => {
         <Controller
                     name={'email' as never}
                     control={control}
-                    defaultValue=""
                     render={({ field: { onChange, value } }) => (
                       <TextField
                             onChange={onChange}

@@ -6,6 +6,7 @@ import { useUser } from '../../hooks/user'
 import { TrainerEvent } from '../../hooks/event'
 import WeekCalendar from '../calendar/week/WeekCalendar.tsx'
 import { BaseEvent } from '../calendar/types.ts'
+import EventPopup from './EventPopup.tsx';
 
 export default function UserCalendar() {
   const { t } = useTranslation()

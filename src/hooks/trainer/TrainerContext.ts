@@ -1,4 +1,5 @@
 import { createContext } from 'react'
+import * as yup from 'yup';
 import { TrainerEvent, UserEventProvider } from '../event'
 import { UiCronType } from '../user'
 
@@ -11,9 +12,9 @@ export enum GroupType {
 export interface TrainerDataType {
   id: string
   name: string
-  country?: string,
-  zipCode?: string,
-  address?: string,
+  country: string,
+  zipCode: string,
+  address: string,
 }
 
 export enum MemberState {
@@ -107,16 +108,34 @@ export interface TicketSheet {
   purchasedTicketNo: number
 }
 
+export const TICKET_SHEET_SCHEMA: yup.ObjectSchema<TicketSheet> = yup.object().shape({
+  type: yup.mixed<GroupType>().oneOf(Object.values(GroupType)).required(),
+  presenceNo: yup.number().required(),
+  remainingEventNo: yup.number().required(),
+  ticketBuyDate: yup.date(),
+  purchasedTicketNo: yup.number().required()
+});
+
 export interface MembershipType {
   //email
   id: string
   name: string
   avatar?: string
   state?: MemberState
-  groups?: string[]
+  groups: string[]
   ticketSheets?: TicketSheet[]
   bonuses?: number[]
 }
+
+export const MEMBERSHIP_TYPE_SCHEMA: yup.ObjectSchema<MembershipType> = yup.object().shape({
+  id: yup.string().email().required(),
+  name: yup.string().required(),
+  avatar: yup.string(),
+  state: yup.mixed<MemberState>().oneOf(Object.values(MemberState)),
+  groups: yup.array().of(yup.string().required()).required(),
+  ticketSheets: yup.array().of(TICKET_SHEET_SCHEMA),
+  bonuses: yup.array().of(yup.number().required()),
+})
 
 export const DEFAULT_MEMBER: MembershipType = {
   id: '',
@@ -129,11 +148,11 @@ export const DEFAULT_MEMBER: MembershipType = {
 export interface TrainingGroupBase {
   id: string
   name: string
+  color: string
   groupType: GroupType
   attachedGroups: string[]
-  color: string
   inviteOnly: boolean
-  cancellationDeadline?: number
+  cancellationDeadline: number
   ticketLength?: number
   ticketValidity?: number
   duration?: number
@@ -162,7 +181,7 @@ interface TrainerContextType {
   groups: TrainingGroupType[]
   eventProvider: UserEventProvider
 
-  saveGroup: (modified: TrainingGroupUIType) => Promise<unknown>
+  saveGroup: (modified: TrainingGroupUIType) => Promise<void>
   deleteGroup: (groupId: string) => Promise<void>
   sendEmail: (to: string, title: string, message: string) => Promise<unknown>
   membershipChanged: (membership: MembershipType[]) => void

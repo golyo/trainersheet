@@ -1,4 +1,4 @@
-import { type CSSProperties, type FC, MouseEvent, MouseEvent } from 'react'
+import { type CSSProperties, type FC, MouseEvent } from 'react'
 
 export type EventClick = (event: BaseEvent, click: MouseEvent) => void
 export type GridClick = (date: Date, click: MouseEvent) => void

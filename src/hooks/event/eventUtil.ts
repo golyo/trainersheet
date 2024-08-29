@@ -33,13 +33,13 @@ export const generateCronEvent = (group: TrainingGroupType, trainer: TrainerCont
     trainerId: trainer.trainerId,
     title: trainer.trainerName,
     text: group.name,
-    startDate: startDate,
-    endDate: new Date(startDate.getTime() + (group.duration * 60 * 1000)),
+    start: startDate,
+    end: new Date(startDate.getTime() + ((group.duration || 0) * 60 * 1000)),
     color: group.color,
     badge: '0',
-    memberIds: [],
-    memberNames: [],
-  } as TrainerEvent
+    memberIds: [] as string[],
+    memberNames: [] as string[],
+  } as TrainerEvent;
 }
 
 const appendCronEvents = (events: TrainerEvent[], group:TrainingGroupType, trainer: TrainerContact, from: Date, to: Date) => {
@@ -105,7 +105,7 @@ export const changeMembershipToEvent = (firestore: Firestore, trainerEvent: Trai
         return
       }
       if (isAdd) {
-        if (group.maxMember <= data.memberIds.length) {
+        if ((group.maxMember || 0) <= data.memberIds.length) {
           reject(MAX_MEMBERSHIP_ERROR)
           return
         }

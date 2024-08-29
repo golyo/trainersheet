@@ -1,10 +1,10 @@
 import { useCallback, useMemo, useState } from 'react'
-import { Controller, FieldValues, useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, Modal, TextField } from '@mui/material'
-import { User, useUser } from '../../hooks/user'
+import { UserBase, useUser } from '../../hooks/user'
 import ModalContainer from '../common/ModalContainer'
 
 const Profile = () => {
@@ -17,15 +17,16 @@ const Profile = () => {
     id: yup.string().required(),
     name: yup.string().required(),
     photoURL: yup.string(),
+    registrationDate: yup.number(),
   }), [])
 
-  const { handleSubmit, control, formState: { errors } } = useForm<User>({
+  const { handleSubmit, control, formState: { errors } } = useForm<UserBase>({
     resolver: yupResolver(schema),
     defaultValues: user,
   })
 
-  const doChanges = useCallback((values: FieldValues) => {
-    saveUser(values as User)
+  const doChanges = useCallback((values: UserBase) => {
+    saveUser(values)
   }, [saveUser])
 
   if (!user) {

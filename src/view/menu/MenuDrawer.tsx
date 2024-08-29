@@ -63,7 +63,7 @@ const MenuDrawer = ({ leftMenu, rightMenu }: Props) => {
   const { user } = useUser()
   const theme = useTheme()
   const { t } = useTranslation()
-  const [state, setState] = useState<{ anchorLeft: HTMLElement | null anchorRight: HTMLElement | null }>({ anchorLeft: null, anchorRight: null })
+  const [state, setState] = useState<{ anchorLeft: HTMLElement | null; anchorRight: HTMLElement | null }>({ anchorLeft: null, anchorRight: null })
 
   const { anchorLeft, anchorRight } = state
   const isLeftOpen = useMemo(() => Boolean(anchorLeft), [anchorLeft])
@@ -71,7 +71,7 @@ const MenuDrawer = ({ leftMenu, rightMenu }: Props) => {
   const css = useMemo(() => styles(theme), [theme])
   const userName = user ? user.name : ''
 
-  const handleRightMenu = useCallback((event: unknown) => setState((prev) => ({
+  const handleRightMenu = useCallback((event: MouseEvent<HTMLElement>) => setState((prev) => ({
     ...prev,
     anchorRight: event.currentTarget,
   })), [])

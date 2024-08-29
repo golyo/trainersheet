@@ -22,7 +22,7 @@ const Register = () => {
     }
     register(email, password, displayName).then(() => {
       // setErrors({})
-    }).catch((err: unknown) => {
+    }).catch((err) => {
       if (err.code.endsWith('password')) {
         setError('password', {
           type: 'manual',
@@ -48,7 +48,6 @@ const Register = () => {
         <Controller
                     name={'displayName' as never}
                     control={control}
-                    defaultValue=""
                     render={({ field: { onChange, value } }) => (
                       <TextField
                             onChange={onChange}
@@ -61,7 +60,6 @@ const Register = () => {
         <Controller
                     name={'email' as never}
                     control={control}
-                    defaultValue=""
                     render={({ field: { onChange, value } }) => (
                       <TextField
                             onChange={onChange}
@@ -76,7 +74,6 @@ const Register = () => {
         <Controller
                     name={'password' as never}
                     control={control}
-                    defaultValue=""
                     render={({ field: { onChange, value } }) => (
                       <TextField
                             onChange={onChange}
@@ -92,7 +89,6 @@ const Register = () => {
         <Controller
                     name={'passwordCheck' as never}
                     control={control}
-                    defaultValue=""
                     render={({ field: { onChange, value } }) => (
                       <TextField
                             onChange={onChange}

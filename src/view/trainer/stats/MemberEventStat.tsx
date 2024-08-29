@@ -42,7 +42,7 @@ const findInrangeBonus = (member: MembershipType, interval: Interval) => {
   if (!member.bonuses) {
     return undefined
   }
-  for (let i = member.bonuses.length - 1 i >= 0 i--) {
+  for (let i = member.bonuses.length - 1; i >= 0; i--) {
     const d = new Date(member.bonuses[i])
     if (interval.from <= d && d <= interval.to) {
       return d

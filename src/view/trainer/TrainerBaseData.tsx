@@ -130,7 +130,7 @@ const TrainerBaseData = () => {
                   filterOptions={filterOptions}
                   options={countries}
                   getOptionLabel={(option) => tc(option as string)}
-                  onChange={(e, values) => setValue('country' as keyof TrainerDataType, values as string || '')}
+                  onChange={(_, values) => setValue('country' as keyof TrainerDataType, values as string || '')}
                   renderInput={(params) => (
                     <TextField
                       {...params}

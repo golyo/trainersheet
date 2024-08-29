@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Button, MenuItem, Paper, Select, SelectChangeEvent, Typography } from '@mui/material'
@@ -21,7 +21,7 @@ const Profile = () => {
 
   const { uploadAvatar } = useStorage()
 
-  const [language, setLanguage] = React.useState(i18n.language)
+  const [language, setLanguage] = useState(i18n.language)
 
   const handleChangeLanguage = useCallback((event: SelectChangeEvent<string>) => {
     const newLanguage = event.target.value
