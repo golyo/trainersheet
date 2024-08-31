@@ -34,7 +34,7 @@ const UserMemberships = () => {
     membership.membership.ticketSheets?.find((sheet) => sheet.type === type)?.remainingEventNo || 0, [])
 
   return (
-    <div className="vertical">
+    <div className="flex-container">
       <Typography variant="h3">{t('trainer.groups')}</Typography>
       <List>
         {groupMemberships && groupMemberships.map((groupMembership, idx) =>

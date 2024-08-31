@@ -43,7 +43,7 @@ const Register = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(doRegister)} className="vertical">
+      <form onSubmit={handleSubmit(doRegister)} className="flex-container">
         <h2>{t('login.registration')}</h2>
         <Controller
                     name={'displayName' as never}

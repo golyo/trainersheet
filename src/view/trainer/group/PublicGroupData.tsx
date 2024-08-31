@@ -13,7 +13,7 @@ const PublicGroupData = ({ group }: { group: TrainingGroupUIType }) => {
         {t(`groupType.${group.groupType}`)}
       </LabelValue>
       <LabelValue label={t('trainingGroup.duration')}>
-        { group.duration }&nbsp{t('common.min')}
+        { group.duration }&nbsp;{t('common.min')}
       </LabelValue>
       <LabelValue label={t('trainingGroup.maxMember')}>
         { group.maxMember }
@@ -25,7 +25,7 @@ const PublicGroupData = ({ group }: { group: TrainingGroupUIType }) => {
       </LabelValue>
       <LabelValue label={t('trainingGroup.trainingTime')}>
         {group.crons.map((cron, idx) => (
-          <div key={idx}>{cron.days.join(',')}&nbsp&nbsp{cron.time}</div>
+          <div key={idx}>{cron.days.join(',')}&nbsp;&nbsp;{cron.time}</div>
         ))}
       </LabelValue>
     </>

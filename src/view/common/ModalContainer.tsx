@@ -22,9 +22,9 @@ const ModalContainer = forwardRef<HTMLDivElement, ModalProps>(({ children, varia
     <Grow in={open} timeout={1000}>
       <Box css={styles.outer}>
         <Box tabIndex={-1} ref={ref} css={[styles.root, appendRootClass]}>
-          <AppBar position="relative">
+          <AppBar position="sticky">
             <Toolbar>
-              <Typography variant="h4" color="inherit" component="div">
+              <Typography variant="h4" color="inherit" component="div" css={styles.headerTitle}>
                 { title }
               </Typography>
               <IconButton onClick={close} edge="end" size="large" color="inherit">
@@ -32,7 +32,7 @@ const ModalContainer = forwardRef<HTMLDivElement, ModalProps>(({ children, varia
               </IconButton>
             </Toolbar>
           </AppBar>
-          <div>
+          <div css={styles.modalContent}>
             {children}
           </div>
         </Box>

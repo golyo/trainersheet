@@ -1,6 +1,7 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
+  AuthProvider as IAuthProvider,
   createUserWithEmailAndPassword,
   EmailAuthProvider,
   FacebookAuthProvider,
@@ -9,8 +10,7 @@ import {
   sendEmailVerification,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
-  signInWithRedirect,
-  getRedirectResult,
+  signInWithPopup,
   signOut,
   updateEmail as updateFirebaseEmail,
   updatePassword as updateFirebasePassword,
@@ -41,6 +41,11 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [state, setState] = useState<{ authUser?: AuthUser; authState: AuthState }>({ authState: AuthState.INIT })
   const { authUser, authState } = state
+
+  const authProviders = useMemo(() => ({
+    google: new GoogleAuthProvider(),
+    facebook: new FacebookAuthProvider(),
+  }), [])
 
   useEffect(() => {
     auth.languageCode = i18n.language
@@ -90,20 +95,22 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     await updateFirebasePassword(userCredential.user, newPassword)
   }, [authUser])
 
-  const signInWithGoogle = useCallback(() => {
-    return signInWithRedirect(auth, new GoogleAuthProvider())
-      .then(() => {
-        return getRedirectResult(auth)
-      })
-      .then((result) => {
-        return GoogleAuthProvider.credentialFromResult(result!)!
+  const signInWithProvider = useCallback((provider: IAuthProvider) => {
+    return signInWithPopup(auth, provider).then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result)
+        const token = credential!.accessToken
+        // The signed-in user info.
+        const user = result.user
+        console.log('+++++AUTH success', token, user)
       }).catch((error) => {
-        console.error('ERROR WHILE LOGIN', error.code, error.message)
         // Handle Errors here.
-      })
-  }, [auth])
+        console.error('ERROR WHILE LOGIN', error.customData.email, error.code, error.message)
+      });
+  }, [auth]);
+  const signInWithGoogle = useCallback(() => signInWithProvider(authProviders.google), [auth, authProviders])
 
-  const signInWithFacebookRedirect = useCallback(() => signInWithRedirect(auth, new FacebookAuthProvider()), [auth])
+  const signInWithFacebook = useCallback(() => signInWithProvider(authProviders.facebook), [auth, authProviders])
 
   const startPasswordReset = useCallback((email: string) => {
     const actionCodeSettings = {
@@ -161,7 +168,9 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (!authUser) {
       throw new Error('User not defined')
     }
+    console.log('+++++updateUser0', authUser.photoURL)
     if (!isEqual(authUser.displayName, displayName) || !isEqual(authUser.photoURL, photoURL || '')) {
+      console.log('+++++updateUser1', photoURL)
       return updateProfile(authUser, { displayName, photoURL }).then(() => {
         setState({
           authState,
@@ -197,7 +206,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     updatePassword,
     startPasswordReset,
     signInWithGoogle,
-    signInWithFacebookRedirect,
+    signInWithFacebook,
     isPasswordEnabled,
   }
 

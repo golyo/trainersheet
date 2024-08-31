@@ -35,7 +35,7 @@ const TrainingGroups = () => {
   }
 
   return (
-    <div className="vertical">
+    <div className="flex-container">
       <Typography variant="h3">{t('trainer.groups')}</Typography>
       <List sx={{ width: 'max(70vw, 320px)', bgcolor: 'background.paper', borderColor: 'divider' }}>
         {trainingUiGroups.map((group, idx) => (
@@ -50,7 +50,7 @@ const TrainingGroups = () => {
                 <Typography color="inherit" sx={{ flex: 1, width: '50%' }}>{ group.name }</Typography>
                 <Box sx={{ width: '50%' }}>
                   {group.crons.map((cron, gidx) => (
-                    <div key={`${idx}-${gidx}`}>{cron.days.join(',')}&nbsp&nbsp{cron.time}</div>
+                    <div key={`${idx}-${gidx}`}>{cron.days.join(',')}&nbsp;&nbsp;{cron.time}</div>
                   ))}
                 </Box>
                 <Box sx={{ width: '40px' }}>

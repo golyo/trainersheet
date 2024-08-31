@@ -89,7 +89,7 @@ const SearchGroupPopup = ({ trainer, closeModal }: Props) => {
                   <Typography color="inherit" sx={{ flex: 1, width: '50%' }}>{ group.name }</Typography>
                   <Box sx={{ width: '50%' }}>
                     {group.crons.map((cron, gidx) => (
-                      <div key={`${idx}-${gidx}`}>{cron.days.join(',')}&nbsp&nbsp{cron.time}</div>
+                      <div key={`${idx}-${gidx}`}>{cron.days.join(',')}&nbsp;&nbsp;{cron.time}</div>
                     ))}
                   </Box>
                   <Box sx={{ width: '40px' }}>

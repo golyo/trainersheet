@@ -41,7 +41,7 @@ const Profile = () => {
         onClose={() => setOpen(false)}
       >
         <ModalContainer variant="big" open={open} close={() => setOpen(false)} title={t('login.profile')}>
-          <form onSubmit={handleSubmit(doChanges)} className="vertical" noValidate>
+          <form onSubmit={handleSubmit(doChanges)} className="flex-container" noValidate>
             <Controller
               name="id"
               control={control}

@@ -31,7 +31,7 @@ const ModifyTicketPopup = ({ membership, sheet }: { membership: MembershipType, 
         onClose={closeModal}
       >
         <ModalContainer variant="big" open={open} close={closeModal} title={t('membership.modifyTicketNo')}>
-          <div className="vertical">
+          <div className="flex-container">
             <LabelValue label={t('login.userName')}>
               { membership.name }
             </LabelValue>

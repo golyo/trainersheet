@@ -28,7 +28,7 @@ const ConfirmDialog = ({ title, description, buttons, open, hideDialog } : Confi
       onClose={hideDialog}
     >
       <ModalContainer variant="small" title={t(title)} close={hideDialog} open={open}>
-        <div className="vertical">
+        <div className="flex-container">
           <Typography id="modal-description">
             { t(description) }
           </Typography>

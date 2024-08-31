@@ -28,7 +28,7 @@ const Verification = () => {
   }
 
   return (
-    <div className="vertical">
+    <div className="flex-container">
       <h2>{t('login.verification')}</h2>
       {authState === AuthState.AUTHORIZED &&
         <div>

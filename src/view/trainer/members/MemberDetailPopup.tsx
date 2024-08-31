@@ -81,7 +81,7 @@ const MemberDetailPopup = ({ sheet, member }: Props) => {
         onClose={closeModal}
       >
         <ModalContainer variant="big" open={open} close={closeModal} title={t('membership.details')}>
-          <div className="vertical">
+          <div className="flex-container">
             <LabelValue label={t('login.email')}>
               { member.id }
             </LabelValue>

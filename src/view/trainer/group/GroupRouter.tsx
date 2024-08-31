@@ -40,7 +40,7 @@ const GroupRouter = () => {
   }
   return (
     <GroupProvider groupId={groupId}>
-      <div className="vertical">
+      <div className="flex-container">
         <GroupContextHeader />
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value}>

@@ -19,7 +19,7 @@ const StatRouter = () => {
   }, [location])
 
   return (
-    <div className="vertical">
+    <div className="flex-container">
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value}>
           <Tab component={Link} to="" label={t('menu.last28DaysStats')} />

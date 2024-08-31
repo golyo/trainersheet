@@ -88,7 +88,7 @@ const TrainerBaseData = () => {
         onClose={closeModal}
       >
         <ModalContainer variant="big" open={open} close={closeModal} title={t('trainer.trainerData')}>
-          <form onSubmit={handleSubmit(doChanges)} className="vertical" noValidate>
+          <form onSubmit={handleSubmit(doChanges)} className="flex-container" noValidate>
             <Controller
               name="id"
               control={control}

@@ -112,17 +112,18 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
   }, [])
 
   const uploadAvatarIfExists = useCallback((usr: User, pAuthUser?: AuthUser) => {
-    // TODO
     if (pAuthUser?.photoURL) {
-      getAvatarUrl(usr.id).then(() => {}, () => {
-        fetch(pAuthUser!.photoURL!).then((response) => {
-          response.blob().then((blob) => {
-            uploadAvatar(blob, usr.id).then(userChanged)
-          })
-        })
-      })
+      fetch(pAuthUser?.photoURL).then(res => {
+        return res.blob();
+      }).then(blob => {
+        return uploadAvatar(blob, usr.id)
+      }).then((result: unknown) => {
+        console.log('image uploaded', result);
+      }).catch(error => {
+        console.error(error);
+      });
     }
-  }, [getAvatarUrl, uploadAvatar, userChanged])
+  }, [uploadAvatar])
 
   const changeUser = useCallback((newUser: User) => {
     if (!newUser.memberships) {
@@ -221,35 +222,31 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
     return addUserRequest(firestore, trainer.id, user!, group).then(() => loadGroupMemberships(user!))
   }, [firestore, loadGroupMemberships, saveUser, user])
 
+  // first login, dbUser exists if trainer registered user
+  const createDbUser = useCallback((pAuthUser: AuthUser, dbUser?: User) => {
+    const toSave = {
+      ...createDBUser(pAuthUser!),
+      ...dbUser,
+    }
+    userSrv.save(toSave as User, true, false).then(() => changeUser(toSave))
+    uploadAvatarIfExists(toSave, pAuthUser)
+  }, [changeUser, uploadAvatarIfExists, userSrv]);
+
   const loadUser = useCallback((pAuthUser: AuthUser) => {
     userSrv.get(HACK_USER || pAuthUser!.email!).then((dbUser) => {
       if (dbUser) {
         if (!dbUser.registrationDate) {
-          // FIRST LOGIN
-          const toSave = {
-            ...createDBUser(pAuthUser!),
-            ...dbUser,
-          }
-          userSrv.save(toSave as User, true, false).then(() => changeUser(dbUser))
+          createDbUser(pAuthUser, user);
         } else {
           // TODO DELETE THIS UPLOAD LATER
           changeUser(dbUser)
           loadGroupMemberships(dbUser)
         }
       } else {
-        const toSave = createDBUser(pAuthUser!)
-        userSrv.save(toSave, true, false).then(() => {
-          changeUser(toSave)
-        })
+        createDbUser(pAuthUser);
       }
     })
-  }, [changeUser, loadGroupMemberships, userSrv])
-
-  useEffect(() => {
-    if (user && authUser && authUser?.photoURL) {
-      uploadAvatarIfExists(user, authUser)
-    }
-  }, [authUser, uploadAvatarIfExists, user])
+  }, [changeUser, createDbUser, loadGroupMemberships, user, userSrv])
 
   useEffect(() => {
     if (!authUser) {

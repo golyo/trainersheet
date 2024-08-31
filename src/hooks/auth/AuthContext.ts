@@ -19,8 +19,8 @@ export interface AuthContextType {
   updateUser: (displayName: string, photoURL?: string) => Promise<void>
   updatePassword: (oldPassword: string, newPassword: string) => Promise<void>
   startPasswordReset: (email: string) => Promise<void>
-  signInWithGoogle: () => Promise<unknown>
-  signInWithFacebookRedirect: () => Promise<never>
+  signInWithGoogle: () => Promise<void>
+  signInWithFacebook: () => Promise<void>
   isPasswordEnabled: () => boolean
 }
 

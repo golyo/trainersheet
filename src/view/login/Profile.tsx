@@ -59,7 +59,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="vertical">
+    <div className="flex-container">
       <LabelValue label={t('common.language')}>
         <Select
           value={language}
@@ -95,10 +95,10 @@ const Profile = () => {
         <ProfilePopup />
         { isPasswordEnabled() && <Link to="changePassword">{t('login.changePassword')}</Link> }
       </div>
-      <div>&nbsp</div>
+      <div>&nbsp;</div>
       <Paper>
         {!user.isTrainer && <div>
-          {!user.registeredAsTrainer && <div className="vertical">
+          {!user.registeredAsTrainer && <div className="flex-container">
             <div>{t('trainer.registrationInfo')}</div>
             <div>
               <Button color="primary" variant="contained" onClick={trainerRegistration} disabled={!user.location}>

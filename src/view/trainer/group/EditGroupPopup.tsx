@@ -120,13 +120,13 @@ const EditGroupPopup = ({ trainingGroup, isOpen, closePopup, saveGroup } : Modal
           <span>{t('trainingGroup.title')}</span>
         </>
       )} close={closePopup}>
-        <form onSubmit={handleSubmit(modifyData)} className="vertical">
+        <form onSubmit={handleSubmit(modifyData)} className="flex-container">
           <div>
             <Accordion disableGutters expanded={showPublic} onChange={toggleAccordion}>
               <AccordionSummary expandIcon={<ExpandMore />} >
                 <Typography>{t('trainer.groupPublic')}</Typography>
               </AccordionSummary>
-              <AccordionDetails className="vertical">
+              <AccordionDetails className="flex-container">
                 <Controller
                   name="name"
                   control={control}
@@ -250,7 +250,7 @@ const EditGroupPopup = ({ trainingGroup, isOpen, closePopup, saveGroup } : Modal
               <AccordionSummary expandIcon={<ExpandMore />} >
                 <Typography>{t('trainer.groupSettings')}</Typography>
               </AccordionSummary>
-              <AccordionDetails className="vertical">
+              <AccordionDetails className="flex-container">
                 <Controller
                   control={control}
                   name="cancellationDeadline"

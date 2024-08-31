@@ -19,7 +19,7 @@ export default function SearchTrainer() {
   const closeModal = useCallback(() => setTrainer(undefined), [])
 
   return (
-    <div className="vertical">
+    <div className="flex-container">
       <Typography variant="h3">{t('menu.searchTrainer')}</Typography>
       <List>
         <Divider />

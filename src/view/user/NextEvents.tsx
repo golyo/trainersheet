@@ -169,7 +169,7 @@ const NextEvents = () => {
   }, [userEventProvider])
 
   return (
-    <div className="vertical">
+    <div className="flex-container">
       <Typography variant="h3">{t('trainer.nextEvents')}</Typography>
       {warningValities.map((wv, idx) => (
         <Alert key={idx} severity="warning">

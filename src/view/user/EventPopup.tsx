@@ -25,7 +25,7 @@ const EventPopup = ({ event, resetEvent }: { event: TrainerEvent | null; resetEv
           <span>{event?.title}</span>
         </>
       )}>
-        <div className="vertical">
+        <div className="flex-container">
           <Typography variant="subtitle1">{event?.description + ' ' + interval}</Typography>
           {event?.showMembers && (
             <>

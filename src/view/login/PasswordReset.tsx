@@ -33,7 +33,7 @@ const PasswordReset = () => {
   return (
     <div>
       <h2>{t('login.resetPassword')}</h2>
-      <form onSubmit={handleSubmit(startReset)} className="vertical">
+      <form onSubmit={handleSubmit(startReset)} className="flex-container">
         <Controller
                     name={'email' as never}
                     control={control}

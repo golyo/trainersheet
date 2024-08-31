@@ -17,7 +17,7 @@ import {
 
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { createTheme, ThemeOptions } from '@mui/material/styles';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
 
 import { FirebaseProvider } from './hooks/firebase';
 import { AuthProvider } from './hooks/auth';
@@ -26,6 +26,8 @@ import { DialogProvider } from './hooks/dialog';
 import ErrorBoundary from './view/common/ErrorBoundary';
 import defaultTheme from './theme/defaultTheme.ts';
 import MenuDrawer, { MenuItemType } from './view/menu/MenuDrawer.tsx';
+
+import './App.css';
 
 export const theme = createTheme(defaultTheme as ThemeOptions);
 

@@ -81,7 +81,7 @@ export default function MemberTicketStat() {
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Avatar sx={{ bgcolor: group.color }}>
                   <EventIcon sx={{ bgcolor: group.color }} ></EventIcon>
-                </Avatar>&nbsp
+                </Avatar>&nbsp;
                 <ListItemText primary={group.name} />
               </div>
             </MenuItem>

@@ -94,7 +94,7 @@ const TrainerActionsPopup = ({ memberId, event, groupType, setEvent } : ActionPo
             <span>{member ? member.name : memberId}</span>
           </span>)
         }>
-          <div className="vertical">
+          <div className="flex-container">
             {member && <LabelValue label={t('membership.remainingEventNo')}>
               <TicketNoWarning sheet={sheet!} t={t} />
             </LabelValue>}

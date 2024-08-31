@@ -11,7 +11,7 @@ const GroupSettingsData = ({ group, attachedGroups }: { group: TrainingGroupUITy
         { group.cancellationDeadline + ' ' + t('common.hour') }
       </LabelValue>
       <LabelValue label={t('trainingGroup.ticketLength')}>
-        { group.ticketLength }&nbsp{t('common.pcs')}
+        { group.ticketLength }&nbsp;{t('common.pcs')}
       </LabelValue>
       <LabelValue label={t('trainingGroup.ticketValidity')}>
         { group.ticketValidity ? group.ticketValidity + ' ' + t('common.month') : t('common.unlimited') }

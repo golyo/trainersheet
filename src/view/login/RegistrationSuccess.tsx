@@ -15,7 +15,7 @@ const RegistrationSuccess = () => {
   const action = query.get('action')
 
   return (
-    <div className="vertical">
+    <div className="flex-container">
       <h2>{t('login.' + action)}</h2>
       <div>
         <div>{t('login.' + action + 'Success')}</div>

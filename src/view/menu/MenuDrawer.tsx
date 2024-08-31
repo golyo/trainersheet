@@ -106,7 +106,6 @@ const MenuDrawer = ({ leftMenu, rightMenu }: Props) => {
     ))
   }, [handleClose, t])
 
-  console.log('TEST', theme)
   return (
     <div css={css.root}>
       <CssBaseline />
@@ -150,7 +149,7 @@ const MenuDrawer = ({ leftMenu, rightMenu }: Props) => {
                   aria-haspopup="true"
                 >
                   <Typography noWrap variant="button">
-                    { userName }&nbsp
+                    { userName }&nbsp;
                   </Typography>
                   <UserAvatar userId={user.id} />
                 </Button>

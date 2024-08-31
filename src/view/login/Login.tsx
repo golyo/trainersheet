@@ -35,17 +35,15 @@ const Login = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(doLogin)} className="vertical" noValidate>
+    <form onSubmit={handleSubmit(doLogin)} className="flex-container" noValidate>
       <h2>{t('login.login')}</h2>
-
       <div>
         <Button color="primary" variant="contained" onClick={signInWithGoogle}>
           {t('login.google')}
-        </Button>&nbsp&nbsp
+        </Button>
         <Button color="primary" variant="contained" onClick={signInWithFacebookRedirect}>
           {t('login.facebook')}
         </Button>
-        <hr/>
       </div>
       <Controller
         name="email"
@@ -82,12 +80,16 @@ const Login = () => {
           {t('login.login')}
         </Button>
       </div>
-      <Link to="/register">
-        {t('login.registerLink')}
-      </Link>
-      <Link to="/resetPassword">
-        {t('login.resetPassword')}
-      </Link>
+      <div>
+        <Link to="/register">
+          {t('login.registerLink')}
+        </Link>
+      </div>
+      <div>
+        <Link to="/resetPassword">
+          {t('login.resetPassword')}
+        </Link>
+      </div>
     </form>
   )
 }

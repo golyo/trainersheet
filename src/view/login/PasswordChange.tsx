@@ -47,7 +47,7 @@ const PasswordChange = () => {
   }
   return (
     <div>
-      <form onSubmit={handleSubmit(changePassword)} className="vertical">
+      <form onSubmit={handleSubmit(changePassword)} className="flex-container">
         <h2>{t('login.changePassword')}</h2>
         <TextField
           value={authUser.email}

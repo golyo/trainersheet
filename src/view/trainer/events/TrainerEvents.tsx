@@ -23,7 +23,7 @@ export default function TrainerEvents() {
   }, [eventProvider, groupId])
 
   return (
-    <div className="vertical">
+    <div className="flex-container">
       <Typography variant={groupId ? H5 : H3}>{t('trainer.nextEvents')}</Typography>
       <List>
         {events.map((event, idx) => (

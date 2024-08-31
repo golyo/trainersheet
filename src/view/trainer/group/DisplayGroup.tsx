@@ -56,7 +56,7 @@ export default function DisplayGroup() {
           <AccordionSummary expandIcon={<ExpandMore />} >
             <Typography>{t('trainer.groupPublic')}</Typography>
           </AccordionSummary>
-          <AccordionDetails className="vertical">
+          <AccordionDetails className="flex-container">
             <PublicGroupData group={group} />
           </AccordionDetails>
         </Accordion>
@@ -65,7 +65,7 @@ export default function DisplayGroup() {
           <AccordionSummary expandIcon={<ExpandMore />}>
             <Typography>{t('trainer.groupSettings')}</Typography>
           </AccordionSummary>
-          <AccordionDetails className="vertical">
+          <AccordionDetails className="flex-container">
             <GroupSettingsData group={group} attachedGroups={attachedGroups} />
           </AccordionDetails>
         </Accordion>

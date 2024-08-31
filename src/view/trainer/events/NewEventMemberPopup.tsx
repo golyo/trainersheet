@@ -82,7 +82,7 @@ const NewEventMemberPopup = ({ event, eventChanged }: { event: TrainerEvent; eve
         onClose={closeModal}
       >
         <ModalContainer variant="small" close={closeModal} open={open} title={t('event.addMember')}>
-          <div className="vertical">
+          <div className="flex-container">
             <Typography variant="h5">{t('event.addGroupMember')}</Typography>
             <LabelValue label={t('event.chooseMemberType')}>
               <TextField select onChange={onSelectChoiceType} size="small" value={choiceType}>

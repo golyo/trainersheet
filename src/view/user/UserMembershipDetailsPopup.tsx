@@ -76,7 +76,7 @@ const UserMembershipDetailPopup = ({ groupMembership, handleRequest, leaveGroup,
         onClose={closeModal}
       >
         <ModalContainer variant="big" close={closeModal} open={!!groupMembership} title={groupMembership?.trainer.trainerName}>
-          <div className="vertical">
+          <div className="flex-container">
             <LabelValue label={t('membership.trainerEmail')}>
               { groupMembership?.trainer.trainerId }
             </LabelValue>

@@ -67,7 +67,7 @@ export default function EventPage() {
   }
 
   return (
-    <div className="vertical">
+    <div className="flex-container">
       <Typography variant="h5">{t('event.details')}</Typography>
       <LabelValue label={t('event.time')}>{getDateRangeStr(event)}</LabelValue>
       <LabelValue label={t('event.members')}>{event.memberIds.length}</LabelValue>

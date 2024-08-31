@@ -51,7 +51,7 @@ export default function NewEventPopup({ startDate, resetStartDate }: Props) {
       onClose={resetStartDate}
     >
       <ModalContainer variant="small" open={!!startDate} close={resetStartDate} title={t('event.createNew')}>
-        <form onSubmit={handleSubmit(doChanges)} className="vertical" noValidate>
+        <form onSubmit={handleSubmit(doChanges)} className="flex-container" noValidate>
           <LabelValue label={t('common.date')}>{utils.formatByString(startDate, utils.formats.fullDate)}</LabelValue>
           <Controller
             control={control}

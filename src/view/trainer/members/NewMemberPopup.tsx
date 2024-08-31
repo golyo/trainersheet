@@ -58,7 +58,7 @@ const NewMemberPopup = () => {
         onClose={closeModal}
       >
         <ModalContainer variant="big" close={closeModal} open={open} title={t('membership.newMember')}>
-          {possibleMembers.length > 0 && <div className="vertical">
+          {possibleMembers.length > 0 && <div className="flex-container">
             <Typography variant="h5">{t('membership.addOtherGroupMember')}</Typography>
             <Select onChange={onSelectMember} size="small" defaultValue={'-'} variant={'filled'}>
               <MenuItem value={'-'}>-</MenuItem>
@@ -68,7 +68,7 @@ const NewMemberPopup = () => {
             </Select>
             <div></div>
           </div>}
-          <form onSubmit={handleSubmit(modifyData)} className="vertical">
+          <form onSubmit={handleSubmit(modifyData)} className="flex-container">
             <Typography variant="h5">{t('membership.inviteMember')}</Typography>
             <Controller
               name="id"

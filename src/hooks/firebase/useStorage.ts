@@ -1,12 +1,13 @@
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-import { useCallback, useMemo } from 'react'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { useCallback  } from 'react'
+import { useFirebase } from './FirebaseProvider.tsx';
 
 const jpegMetadata = {
   contentType: 'image/jpeg',
 }
 
 const useStorage = () => {
-  const storage = useMemo(() => getStorage(), [])
+  const { storage } = useFirebase();
 
   const uploadAvatar = useCallback((file: File | Blob, fileName: string) => {
     const storageRef = ref(storage, `avatars/${fileName}.jpg`)

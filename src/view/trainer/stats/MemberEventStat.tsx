@@ -149,7 +149,7 @@ export default function MemberEventStat({ interval, leftFilter } : StatProp) {
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Avatar sx={{ bgcolor: group.color }}>
                   <EventIcon sx={{ bgcolor: group.color }} ></EventIcon>
-                </Avatar>&nbsp
+                </Avatar>&nbsp;
                 <ListItemText primary={group.name} />
               </div>
             </MenuItem>
