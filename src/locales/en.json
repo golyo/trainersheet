@@ -46,6 +46,7 @@
     "year": "Year"
   },
   "login": {
+    "welcome": "Welcome to TrainerSheet portal!",
     "newAvatar": "New avatar",
     "email": "Email",
     "password": "Password",
@@ -58,8 +59,9 @@
     "login": "Log in",
     "location": "Location",
     "profile": "Profile",
-    "google": "Google login",
-    "facebook": "Facebook login",
+    "googleLogin": "Google login",
+    "emailLogin": "Email login",
+    "facebookLogin": "Facebook login",
     "registration": "Registration",
     "verification": "Verification",
     "registerLink": "Register new user",

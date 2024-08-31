@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useMemo, forwardRef, ReactNode } from 'react'
-import { AppBar, Box, Grow, IconButton, Toolbar, Typography } from '@mui/material'
+import { AppBar, Box, Grow, IconButton, Paper, Toolbar, Typography } from '@mui/material'
 import { Close } from '@mui/icons-material'
 
 import styles from './ModalContainer.style'
@@ -21,7 +21,7 @@ const ModalContainer = forwardRef<HTMLDivElement, ModalProps>(({ children, varia
   return (
     <Grow in={open} timeout={1000}>
       <Box css={styles.outer}>
-        <Box tabIndex={-1} ref={ref} css={[styles.root, appendRootClass]}>
+        <Paper tabIndex={-1} ref={ref} css={[styles.root, appendRootClass]} elevation={3}>
           <AppBar position="sticky">
             <Toolbar>
               <Typography variant="h4" color="inherit" component="div" css={styles.headerTitle}>
@@ -35,7 +35,7 @@ const ModalContainer = forwardRef<HTMLDivElement, ModalProps>(({ children, varia
           <div css={styles.modalContent}>
             {children}
           </div>
-        </Box>
+        </Paper>
       </Box>
     </Grow>
   )

@@ -45,6 +45,7 @@
     "year": "Év"
   },
   "login": {
+    "welcome": "Üdvözöljük a TrainerSheet portálon!",
     "newAvatar": "Új avatar",
     "email": "Email",
     "password": "Jelszó",
@@ -57,11 +58,12 @@
     "login": "Belépés",
     "location": "Helyszín",
     "profile": "Felhasználói Beállítások",
-    "google": "Google belépés",
-    "facebook": "Facebook belépés",
+    "googleLogin": "Google belépés",
+    "facebookLogin": "Facebook belépés",
+    "emailLogin": "Email belépés",
     "register": "Regisztráció",
     "verification": "Elenőrzés",
-    "registerLink": "Új felhasználó rögzítése",
+    "registerLink": "Regisztráció",
     "loginLink": "Vissza a belépéshez",
     "verificationSent": "Ellenőrző levél kiküldve a(z) {{email}} címre, kérem ellenőrizze a postaládáját.",
     "verificationTodo": "Ha az ellenőrző levél nem érkezett meg, vagy lejárt, kérem küldje el azt újra.",

@@ -124,7 +124,6 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <DialogProvider>
-        // @ts-ignore
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locale}>
           <Router>
             <FirebaseProvider>

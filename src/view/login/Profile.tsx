@@ -59,63 +59,56 @@ const Profile = () => {
   }
 
   return (
-    <div className="flex-container">
-      <LabelValue label={t('common.language')}>
-        <Select
-          value={language}
-          onChange={handleChangeLanguage}
-          variant="standard"
-        >
-          <MenuItem value="hu">
-            magyar
-          </MenuItem>
-          <MenuItem value="en">
-            english
-          </MenuItem>
-        </Select>
-      </LabelValue>
-      <Typography variant="h3">{t('login.profile')}</Typography>
-      <LabelValue label={t('login.email')}>{user.id}</LabelValue>
-      <LabelValue label={t('login.userName')}>{user.name}</LabelValue>
-      <LabelValue label={t('login.photoURL')}>
-        <div className="horizontal">
-          <UserAvatar userId={user.id}/>
-          <Button variant="contained" component="label">
-            {t('login.newAvatar')}
-            <input
-              type="file"
-              accept="image/jpeg"
-              onChange={selectFile}
-              hidden
-            />
+    <div>
+      <Paper className="flex-container" elevation={3}>
+        <LabelValue label={t('common.language')}>
+          <Select
+            value={language}
+            onChange={handleChangeLanguage}
+            variant="standard"
+          >
+            <MenuItem value="hu">
+              magyar
+            </MenuItem>
+            <MenuItem value="en">
+              english
+            </MenuItem>
+          </Select>
+        </LabelValue>
+        <Typography variant="h3">{t('login.profile')}</Typography>
+        <LabelValue label={t('login.email')}>{user.id}</LabelValue>
+        <LabelValue label={t('login.userName')}>{user.name}</LabelValue>
+        <LabelValue label={t('login.photoURL')}>
+          <div className="horizontal">
+            <UserAvatar userId={user.id}/>
+            <Button variant="contained" component="label">
+              {t('login.newAvatar')}
+              <input
+                type="file"
+                accept="image/jpeg"
+                onChange={selectFile}
+                hidden
+              />
+            </Button>
+          </div>
+        </LabelValue>
+        <div>
+          <ProfilePopup />
+          { isPasswordEnabled() && <Link to="changePassword">{t('login.changePassword')}</Link> }
+        </div>
+      </Paper>
+      {!user.isTrainer && !user.registeredAsTrainer && <Paper className="flex-container" elevation={3}>
+        <div>{t('trainer.registrationInfo')}</div>
+        <div>
+          <Button color="primary" variant="contained" onClick={trainerRegistration} disabled={!user.location}>
+            {t('common.register')}
           </Button>
         </div>
-      </LabelValue>
-      <div>
-        <ProfilePopup />
-        { isPasswordEnabled() && <Link to="changePassword">{t('login.changePassword')}</Link> }
-      </div>
-      <div>&nbsp;</div>
-      <Paper>
-        {!user.isTrainer && <div>
-          {!user.registeredAsTrainer && <div className="flex-container">
-            <div>{t('trainer.registrationInfo')}</div>
-            <div>
-              <Button color="primary" variant="contained" onClick={trainerRegistration} disabled={!user.location}>
-                {t('common.register')}
-              </Button>
-            </div>
-          </div>}
-          {user.registeredAsTrainer && <div>
-            {t('trainer.waitingApprovalText')}
-          </div>}
-        </div>}
-        {user.isTrainer && <div>
-          {t('trainer.approvedText')}
-        </div>}
-      </Paper>
-      {user.isTrainer && <div><TrainerBaseData /></div>}
-
+      </Paper>}
+      {!user.isTrainer && user.registeredAsTrainer && <Paper className="flex-container" elevation={3}>
+        {t('trainer.waitingApprovalText')}
+      </Paper>}
+      {user.isTrainer && <TrainerBaseData />}
     </div>
   )
 }
