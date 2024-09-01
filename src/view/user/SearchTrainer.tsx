@@ -20,7 +20,7 @@ export default function SearchTrainer() {
 
   return (
     <div className="flex-container">
-      <Typography variant="h3">{t('menu.searchTrainer')}</Typography>
+      <Typography variant="h4">{t('menu.searchTrainer')}</Typography>
       <List>
         <Divider />
         {trainers.map((tr, idx) => (

@@ -14,7 +14,7 @@ const GroupContextHeader = () => {
     return null
   }
   return (
-    <Typography variant="h3" className="horizontal">
+    <Typography variant="h4" className="horizontal">
       <IconButton component={Link} to="/groups">
         <ArrowBack color="primary"/>
       </IconButton>

@@ -21,7 +21,7 @@ export default function UserCalendar() {
 
   return (
     <div>
-      <Typography variant="h3">{t('menu.myCalendar')}</Typography>
+      <Typography variant="h4">{t('menu.myCalendar')}</Typography>
       <WeekCalendar eventProvider={userEventProvider} onEventClick={eventClick} />
       <EventPopup event={selectedEvent} resetEvent={resetEvent} />
     </div>

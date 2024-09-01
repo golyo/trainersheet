@@ -35,7 +35,7 @@ export default function MonthlyMemberStat() {
 
   return (
     <>
-      <Typography variant="h3">{t('trainer.userMonthlyStats')}</Typography>
+      <Typography variant="h4">{t('trainer.userMonthlyStats')}</Typography>
       <MemberEventStat interval={interval} leftFilter={(
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
           <IconButton onClick={() => addMonth(-1)} color="primary"><ArrowBackIcon /></IconButton>

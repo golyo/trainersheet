@@ -37,8 +37,6 @@ export interface UserBase {
 }
 
 export interface User extends UserBase {
-  registeredAsTrainer?: boolean;
-  isTrainer?: boolean;
   location?: string;
   memberships?: TrainerContact[];
 }

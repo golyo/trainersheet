@@ -170,7 +170,7 @@ const NextEvents = () => {
 
   return (
     <div className="flex-container">
-      <Typography variant="h3">{t('trainer.nextEvents')}</Typography>
+      <Typography variant="h4">{t('trainer.nextEvents')}</Typography>
       {warningValities.map((wv, idx) => (
         <Alert key={idx} severity="warning">
           {t('warning.ticketExpiredWarning', {

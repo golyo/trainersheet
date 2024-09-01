@@ -64,7 +64,7 @@ export default function MemberTicketStat() {
 
   return (
     <>
-      <Typography variant="h3">{t('menu.memberTicketStats')}</Typography>
+      <Typography variant="h4">{t('menu.memberTicketStats')}</Typography>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div></div>
         <TextField select

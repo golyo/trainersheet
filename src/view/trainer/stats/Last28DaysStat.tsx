@@ -15,7 +15,7 @@ export default function Last28DaysStat() {
 
   return (
     <>
-      <Typography variant="h3">{t('trainer.last28DaysStats')}</Typography>
+      <Typography variant="h4">{t('trainer.last28DaysStats')}</Typography>
       <MemberEventStat interval={interval} />
     </>
   )

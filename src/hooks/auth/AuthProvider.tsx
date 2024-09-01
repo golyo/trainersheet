@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState, ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
   AuthProvider as IAuthProvider,
@@ -34,7 +34,7 @@ const NOT_AUTH_PAGES = [
   '/resetPassword',
 ]
 
-const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { auth } = useFirebase()
   const navigate = useNavigate()
   const location = useLocation()

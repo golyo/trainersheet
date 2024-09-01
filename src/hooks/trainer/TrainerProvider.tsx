@@ -4,17 +4,20 @@ import TrainerContext, {
   TrainerDataType, TrainerState,
   TrainingGroupType, TrainingGroupUIType,
 } from './TrainerContext'
-import { useUser } from '../user'
+import { User, useUser } from '../user'
 import { changeItem, insertObject, removeItemById, useFirestore } from '../firestore/firestore'
 import { createTrainerEventProvider } from '../event/eventUtil'
 import { useFirebase } from '../firebase'
 import { convertGroupToFirestore } from './GroupProvider'
 import useTrainerEvents from './useTrainerEvents'
 
-const setTrainerDeafults = (trainerData: TrainerDataType) => {
-  trainerData.zipCode = trainerData.zipCode || ''
-  trainerData.address = trainerData.address || ''
-}
+const createDefaultTrainer = (user: User) => ({
+  id: user.id,
+  name: user.name,
+  address: '',
+  country: '',
+  zipCode: '',
+});
 
 const TrainerProvider = ({ children }: { children: ReactNode }) => {
   const { firestore } = useFirebase()
@@ -73,11 +76,13 @@ const TrainerProvider = ({ children }: { children: ReactNode }) => {
     members: prev.members,
   }))), [groupSrv])
 
-  const saveTrainerData = useCallback((modified: TrainerDataType) => trainerSrv.save(modified).then(() => setState((prev) => ({
-    trainerData: modified,
-    members: prev.members,
-    groups: prev.groups,
-  }))), [trainerSrv])
+  const saveTrainerData = useCallback((modified: TrainerDataType) => {
+    return trainerSrv.save(modified).then(() => setState((prev) => ({
+      trainerData: modified,
+      members: prev.members,
+      groups: prev.groups,
+    })))
+  }, [trainerSrv, user])
 
   const updateMembership = useCallback((membership: MembershipType) => {
     return memberSrv.save(membership).then(() => {
@@ -94,24 +99,28 @@ const TrainerProvider = ({ children }: { children: ReactNode }) => {
       return
     }
     Promise.all([trainerSrv.get(user!.id) as PromiseLike<unknown>, memberSrv.listAll(), groupSrv.listAll()]).then((objects) => {
-      setTrainerDeafults(objects[0] as TrainerDataType)
+      const defaultTrainerData = createDefaultTrainer(user);
+      const trainerData = {
+        ...defaultTrainerData,
+        ...(objects[0] as TrainerDataType | undefined),
+      };
+      console.log('+++++TrainerProvider state', defaultTrainerData, trainerData);
       setState({
-        trainerData: objects[0] as TrainerDataType | undefined,
+        trainerData,
         members: objects[1] as MembershipType[],
         groups: objects[2] as TrainingGroupType[],
       })
+      console.log('+++++TrainerProvider state', trainerData)
     })
   }, [groupSrv, memberSrv, trainerSrv, user])
 
   useEffect(() => {
+    console.log('+++++++Trainer data', trainerData);
     if (!trainerData) {
       loadTrainerState()
     }
   }, [loadTrainerState, trainerData])
 
-  if (!trainerData || !eventProvider) {
-    return null
-  }
   const ctx = {
     trainerData,
     members: members!,

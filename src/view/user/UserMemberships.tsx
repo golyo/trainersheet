@@ -35,7 +35,7 @@ const UserMemberships = () => {
 
   return (
     <div className="flex-container">
-      <Typography variant="h3">{t('trainer.groups')}</Typography>
+      <Typography variant="h4">{t('trainer.groups')}</Typography>
       <List>
         {groupMemberships && groupMemberships.map((groupMembership, idx) =>
           groupMembership.contactGroups.map((group, gidx) => (

@@ -33,7 +33,7 @@ export default function TrainerCalendar() {
 
   return (
     <div>
-      <Typography variant="h3">{t('trainer.calendar')}</Typography>
+      <Typography variant="h4">{t('trainer.calendar')}</Typography>
       // TODO newEventClick
       <WeekCalendar onEventClick={eventClick}
                     eventProvider={eventProvider}

@@ -117,8 +117,6 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
         return res.blob();
       }).then(blob => {
         return uploadAvatar(blob, usr.id)
-      }).then((result: unknown) => {
-        console.log('image uploaded', result);
       }).catch(error => {
         console.error(error);
       });
@@ -283,7 +281,7 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
   if (authUser && !user) {
     return null
   }
-  if (user && user.isTrainer) {
+  if (user) {
     return (
       <UserContext.Provider value={ctx as UserContextType}>
         <TrainerProvider>

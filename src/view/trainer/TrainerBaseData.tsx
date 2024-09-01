@@ -1,35 +1,19 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { Autocomplete, Button, createFilterOptions, Modal, TextField } from '@mui/material'
+import { Button, MenuItem, Modal, TextField } from '@mui/material'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useTrainer } from '../../hooks/trainer'
 import ModalContainer from '../common/ModalContainer'
 import { TrainerDataType } from '../../hooks/trainer/TrainerContext.ts'
+import { useLanguages } from '../../hooks/language/LanguageProvider.tsx';
 
-interface IPResult {
-  status: string
-  country: string
-  countryCode: string
-  region: string
-  regionName: string
-  city: string
-  zip: string
-  lat: string
-  lon: string
-  timezone: string
-  query: string
-}
-
-const ipApi = () => {
-  return fetch('http://ip-api.com/json').then((res) => res.json())
-}
-
-const TrainerBaseData = () => {
-  const { t: tc, i18n } = useTranslation('countries')
+const TrainerBaseData = ({ buttonLabel } : { buttonLabel?: string }) => {
   const { t } = useTranslation()
   const { trainerData, saveTrainerData } = useTrainer()
+  
+  const { ipData, countries } = useLanguages();
 
   const [open, setOpen] = useState(false)
 
@@ -46,17 +30,7 @@ const TrainerBaseData = () => {
     defaultValues: trainerData,
   })
 
-  const filterOptions = useMemo(() => createFilterOptions({
-    matchFrom: 'start',
-    stringify: (option: string) => tc(option, ['countries']),
-  }), [tc])
-
-  const countries = useMemo(() => {
-    // force lazy load
-    tc('HU', ['countries'])
-    const cs = i18n.getResourceBundle(i18n.language, 'countries')
-    return cs ? Object.keys(cs) : []
-  }, [i18n, tc])
+  console.log('Form default values', trainerData);
 
   const openModal = useCallback(() => setOpen(true), [])
   const closeModal = useCallback(() => setOpen(false), [])
@@ -70,11 +44,9 @@ const TrainerBaseData = () => {
       return
     }
     if (!trainerData.country) {
-      ipApi().then((ipResult: IPResult) => {
-        setValue('country' as keyof TrainerDataType, ipResult.countryCode)
-      })
+      setValue('country' as keyof TrainerDataType, ipData.countryCode.toLowerCase())
     }
-  }, [i18n, setValue, t, trainerData])
+  }, [ipData.countryCode, setValue, trainerData])
 
   if (!trainerData) {
     return <div></div>
@@ -82,7 +54,7 @@ const TrainerBaseData = () => {
 
   return (
     <>
-      <Button variant="contained" onClick={openModal}>{t('trainer.trainerData')}</Button>
+      <Button variant="contained" onClick={openModal}>{buttonLabel || t('trainer.trainerData')}</Button>
       <Modal
         open={open}
         onClose={closeModal}
@@ -92,7 +64,7 @@ const TrainerBaseData = () => {
             <Controller
               name="id"
               control={control}
-              defaultValue={trainerData.id as never}
+              defaultValue={trainerData.id}
               render={({ field }) => (
                 <TextField
                   { ...field }
@@ -107,6 +79,7 @@ const TrainerBaseData = () => {
             <Controller
               name="name"
               control={control}
+              defaultValue={trainerData.name}
               render={({ field }) => (
                 <TextField
                   { ...field }
@@ -121,30 +94,28 @@ const TrainerBaseData = () => {
             <Controller
               control={control}
               name="country"
-              render={({ field }) =>
-                <Autocomplete
+              defaultValue={trainerData.country}
+              render={({ field }) => (
+                <TextField
                   {...field}
+                  select
+                  label={t('trainer.country')}
                   size="small"
-                  sx={{ width: '100%' }}
-                  value={field.value || null}
-                  filterOptions={filterOptions}
-                  options={countries}
-                  getOptionLabel={(option) => tc(option as string)}
-                  onChange={(_, values) => setValue('country' as keyof TrainerDataType, values as string || '')}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label={t('trainer.country')}
-                      error={!!errors.country}
-                      helperText={errors.country?.message as string || ''}
-                    />
+                  variant="outlined"
+                  error={!!errors.country}
+                  helperText={errors.country?.message as string || ''}
+                >
+                  <MenuItem value={''}>-</MenuItem>
+                  {countries.map((country, idx) =>
+                    (<MenuItem key={idx} value={country.alpha2}>{country.name}</MenuItem>),
                   )}
-                />
-              }
+                </TextField>
+              )}
             />
             <Controller
               name="zipCode"
               control={control}
+              defaultValue={trainerData.zipCode}
               render={({ field }) => (
                 <TextField
                   { ...field }
@@ -159,6 +130,7 @@ const TrainerBaseData = () => {
             <Controller
               name="address"
               control={control}
+              defaultValue={trainerData.address}
               render={({ field }) => (
                 <TextField
                   { ...field }

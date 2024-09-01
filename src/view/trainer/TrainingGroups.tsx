@@ -36,7 +36,7 @@ const TrainingGroups = () => {
 
   return (
     <div className="flex-container">
-      <Typography variant="h3">{t('trainer.groups')}</Typography>
+      <Typography variant="h4">{t('trainer.groups')}</Typography>
       <List sx={{ width: 'max(70vw, 320px)', bgcolor: 'background.paper', borderColor: 'divider' }}>
         {trainingUiGroups.map((group, idx) => (
           <div key={idx}>

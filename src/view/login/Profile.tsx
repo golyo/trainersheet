@@ -10,13 +10,15 @@ import ProfilePopup from './ProfilePopup'
 import useStorage from '../../hooks/firebase/useStorage'
 import UserAvatar from '../common/UserAvatar'
 import { useDialog } from '../../hooks/dialog'
+import { useTrainer } from '../../hooks/trainer';
 
 const MAX_AVATAR_SIZE = 100000
 
 const Profile = () => {
   const { t, i18n } = useTranslation()
   const { isPasswordEnabled } = useAuth()
-  const { user, saveUser, userChanged } = useUser()
+  const { user, userChanged } = useUser()
+  const { trainerData } = useTrainer()
   const { showDialog } = useDialog()
 
   const { uploadAvatar } = useStorage()
@@ -28,14 +30,6 @@ const Profile = () => {
     setLanguage(newLanguage)
     i18n.changeLanguage(newLanguage)
   }, [i18n])
-
-  const trainerRegistration = useCallback(() => {
-    if (!user) {
-      return
-    }
-    const toSave = { ...user, registeredAsTrainer: true }
-    return saveUser(toSave)
-  }, [saveUser, user])
 
   const selectFile = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files && e.target.files.length > 0 ? e.target.files![0] : undefined
@@ -61,6 +55,7 @@ const Profile = () => {
   return (
     <div>
       <Paper className="flex-container" elevation={3}>
+        <Typography variant="h4">{t('login.profile')}</Typography>
         <LabelValue label={t('common.language')}>
           <Select
             value={language}
@@ -75,7 +70,6 @@ const Profile = () => {
             </MenuItem>
           </Select>
         </LabelValue>
-        <Typography variant="h3">{t('login.profile')}</Typography>
         <LabelValue label={t('login.email')}>{user.id}</LabelValue>
         <LabelValue label={t('login.userName')}>{user.name}</LabelValue>
         <LabelValue label={t('login.photoURL')}>
@@ -97,18 +91,18 @@ const Profile = () => {
           { isPasswordEnabled() && <Link to="changePassword">{t('login.changePassword')}</Link> }
         </div>
       </Paper>
-      {!user.isTrainer && !user.registeredAsTrainer && <Paper className="flex-container" elevation={3}>
+      {!trainerData && <Paper className="flex-container" elevation={3}>
         <div>{t('trainer.registrationInfo')}</div>
         <div>
-          <Button color="primary" variant="contained" onClick={trainerRegistration} disabled={!user.location}>
-            {t('common.register')}
-          </Button>
+          <TrainerBaseData buttonLabel={t('common.register') as string}/>
         </div>
       </Paper>}
-      {!user.isTrainer && user.registeredAsTrainer && <Paper className="flex-container" elevation={3}>
-        {t('trainer.waitingApprovalText')}
+      {trainerData && <Paper className="flex-container" elevation={3}>
+        <div>{t('trainer.trainerInfo')}</div>
+        <div>
+          <TrainerBaseData/>
+        </div>
       </Paper>}
-      {user.isTrainer && <TrainerBaseData />}
     </div>
   )
 }

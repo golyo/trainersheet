@@ -44,11 +44,13 @@ import MemberTicketStat from '../trainer/stats/MemberTicketStat'
 
 import styles from './MenuDrawer.style'
 import { useTheme } from '@emotion/react'
+import { TrainerDataType } from '../../hooks/trainer/TrainerContext.ts';
+import { useTrainer } from '../../hooks/trainer';
 
 export type MenuItemType = {
   label: string
   icon?: ReactNode
-  isVisible: (user?: User) => boolean
+  isVisible: (user?: User, trainer?: TrainerDataType) => boolean
   path: string
 }
 
@@ -61,6 +63,7 @@ type Props = {
 const MenuDrawer = ({ leftMenu, rightMenu }: Props) => {
   const { logout } = useAuth()
   const { user } = useUser()
+  const { trainerData } = useTrainer()
   const theme = useTheme()
   const { t } = useTranslation()
   const [state, setState] = useState<{ anchorLeft: HTMLElement | null; anchorRight: HTMLElement | null }>({ anchorLeft: null, anchorRight: null })
@@ -90,8 +93,8 @@ const MenuDrawer = ({ leftMenu, rightMenu }: Props) => {
     setState((prev) => ({ ...prev, anchorLeft: null, anchorRight: null }))
   }, [])
 
-  const leftVisible = useMemo(() => leftMenu.filter((menu) => user && menu.isVisible(user)), [leftMenu, user])
-  const rightVisible = useMemo(() => rightMenu.filter((menu) => user && menu.isVisible(user)), [rightMenu, user])
+  const leftVisible = useMemo(() => leftMenu.filter((menu) => user && menu.isVisible(user, trainerData)), [leftMenu, user])
+  const rightVisible = useMemo(() => rightMenu.filter((menu) => user && menu.isVisible(user, trainerData)), [rightMenu, user])
 
   const renderMenu = useCallback((menus: MenuItemType[]) => {
     return menus.map((item) => (

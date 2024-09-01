@@ -44,12 +44,12 @@ export default function MenuAppBar() {
                             id="menu-appbar"
                             anchorEl={anchorEl}
                             anchorOrigin={{
-                              flex-container: 'top',
+                              vertical: 'top',
                               horizontal: 'right',
                             }}
                             keepMounted
                             transformOrigin={{
-                              flex-container: 'top',
+                              vertical: 'top',
                               horizontal: 'right',
                             }}
                             open={Boolean(anchorEl)}

@@ -28,6 +28,7 @@ import defaultTheme from './theme/defaultTheme.ts';
 import MenuDrawer, { MenuItemType } from './view/menu/MenuDrawer.tsx';
 
 import './App.css';
+import LanguageProvider from './hooks/language/LanguageProvider.tsx';
 
 export const theme = createTheme(defaultTheme as ThemeOptions);
 
@@ -62,25 +63,25 @@ const leftMenu: MenuItemType[] = [
 
 const rightMenu: MenuItemType[] = [
   {
-    isVisible: (user) => !!user && !!user.isTrainer,
+    isVisible: (user, trainer) => !!user && !!trainer,
     label: 'trainer.events',
     path: '/trainerEvents',
     icon: <PermContactCalendar />,
   },
   {
-    isVisible: (user) => !!user && !!user.isTrainer,
+    isVisible: (user, trainer) => !!user && !!trainer,
     label: 'trainer.calendar',
     path: '/trainerCalendar',
     icon: <CalendarViewWeek />,
   },
   {
-    isVisible: (user) => !!user && !!user.isTrainer,
+    isVisible: (user, trainer) => !!user && !!trainer,
     label: 'trainer.groups',
     path: '/groups',
     icon: <Groups />,
   },
   {
-    isVisible: (user) => !!user && !!user.isTrainer,
+    isVisible: (user, trainer) => !!user && !!trainer,
     label: 'menu.userStats',
     path: '/stats',
     icon: <InsertChart />,
@@ -125,17 +126,19 @@ function App() {
     <ThemeProvider theme={theme}>
       <DialogProvider>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locale}>
-          <Router>
-            <FirebaseProvider>
-              <AuthProvider>
-                <UserProvider>
-                  <ErrorBoundary>
-                    <MenuDrawer leftMenu={leftMenu} rightMenu={rightMenu}/>
-                  </ErrorBoundary>
-                </UserProvider>
-              </AuthProvider>
-            </FirebaseProvider>
-          </Router>
+          <LanguageProvider>
+            <Router>
+              <FirebaseProvider>
+                <AuthProvider>
+                  <UserProvider>
+                    <ErrorBoundary>
+                      <MenuDrawer leftMenu={leftMenu} rightMenu={rightMenu}/>
+                    </ErrorBoundary>
+                  </UserProvider>
+                </AuthProvider>
+              </FirebaseProvider>
+            </Router>
+          </LanguageProvider>
         </LocalizationProvider>
       </DialogProvider>
     </ThemeProvider>
